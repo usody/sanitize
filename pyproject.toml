@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "usody-sanitize"
+version = "0.1.0-beta1"
+
+description = "A tool to securely erase/wipe data on disks HDD and SSD with a proper sanitization process."
+repository = "https://github.com/usody/sanitize"
+authors = ["blkpws <me@blkpws.xyz>"]
+readme = "README.md"
+
+[tool.poetry_bumpversion.file."usody_sanitize/__init__.py"]
+
+[tool.poetry.dependencies]
+python = "^3.9.2"
+pydantic = "^1.10.2"
+
+[tool.poetry.group.doc.dependencies]
+mkdocs = "^1.4.2"
+jinja2 = "^3.1.2"
+typer = "^0.7.0"
+mkdocs-material = "^9.0.6"
+mdx-include = "^1.4.2"
+mkdocs-markdownextradata-plugin = "^0.2.5"
+
+[tool.poetry.extras]
+cmd = ["fire"]
+
+[tool.poetry.scripts]
+sanitize = { command = "usody_sanitize.main:run", extras = ["cmd"] }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
