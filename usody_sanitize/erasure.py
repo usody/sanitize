@@ -58,17 +58,17 @@ async def auto_erase_disks(
     erasures: List[ErasureProcess] = []
     tasks: List[asyncio.Task] = []
 
-
     for blk in blocks:
 
         if blk.type != "disk":
             logger.debug(f"Skipping {blk.path}")
             continue  # Skip non disk volumes.
 
-        if disks is not None and blk.path in disks:
-            disks.remove(blk.path)
-        else:
-            continue
+        if disks is not None:
+            if blk.path in disks:
+                disks.remove(blk.path)
+            else:
+                continue
 
         # Detect if one of those drives has a mounted partition as root.
         if blk.children:
