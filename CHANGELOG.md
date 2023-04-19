@@ -2,6 +2,10 @@
 
 Better description of changes on each release.
 
+### 0.1.0-beta6
+
+- Allow to be installed on Python 3.8.
+
 ### 0.1.0-beta5
 
 - Fixes typos and errors.
