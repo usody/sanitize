@@ -53,8 +53,8 @@ def run_coroutine(coro):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='sanitize a disk')
-    parser.add_argument('-m', '--method', type=str,
-                        help='sanitize method')
+    parser.add_argument('-m', '--method', type=str, help='sanitize method',
+                        choices=['BASIC', 'BASELINE', 'ENHANCED'])
 
     # Select the
     disk = parser.add_mutually_exclusive_group(required=True)

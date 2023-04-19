@@ -85,7 +85,9 @@ async def auto_erase_disks(
         # Start erasure task.
         tasks.append(asyncio.create_task(erasure.run()))
 
-    logger.warning(f"Disks [{', '.join(disks)}] not found.")
+    if disks:
+        logger.warning(f"Disks [{', '.join(disks)}] not found.")
+
     [await task for task in tasks]
     logger.debug(f">>> {erasures}")
     return [r.export() for r in erasures]
