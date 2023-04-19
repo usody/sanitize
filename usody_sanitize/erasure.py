@@ -1,3 +1,4 @@
+import sys
 import json
 import logging
 import asyncio
@@ -26,18 +27,37 @@ class DefaultMethods(Enum):
 
 
 async def auto_erase_disks(
-        method: Optional[Union[schemas.ErasureMethod, str]] = None,
-        disks: List[str] = None,
+        method: Optional[str] = None,
+        disks: Optional[List[str]] = None,
 ) -> Optional[List[dict]]:
     """A main point to erase all disks unless disks mounted at root "/"
     then generates a certificate as JSON with all the information of
     the disk, erasure and the validation of the successful data wiped.
 
+    :param Optional[str] method: A string to select which pre-defined
+        methods to use, basic, baseline or enhanced. If none, Basic will
+        be selected.
+    :param Optional[List[str]] disks: A list of disks to be erased. If
+        none, all disks detected will be erased and sanitized.
+
     :return:
     """
+    # Select method.
+    if method:
+        try:
+            method = DefaultMethods[method.upper()].value
+        except ValueError:
+            sys.exit("Sanitize method not valid.")
+    else:
+        # Default method when not set by args.
+        method = DefaultMethods.BASIC.value
+    logger.info(f"Using sanitize method '{method.name}'.")
+
+    # Get disks.
     blocks: List[schemas.Block] = await commands.list_blocks(children=True)
     erasures: List[ErasureProcess] = []
     tasks: List[asyncio.Task] = []
+
 
     for blk in blocks:
 
@@ -45,11 +65,17 @@ async def auto_erase_disks(
             logger.debug(f"Skipping {blk.path}")
             continue  # Skip non disk volumes.
 
+        if disks is not None and blk.path in disks:
+            disks.remove(blk.path)
+        else:
+            continue
+
         # Detect if one of those drives has a mounted partition as root.
         if blk.children:
+
             if any([cld.mountpoint == "/" for cld in blk.children
                     if cld.mountpoint is not None]):
-                logger.warning(f"{blk.path} has a mounted partition as root.")
+                logger.warning(f"Skipping disk {blk.path} mounted as root.")
                 continue
 
         logger.debug(f"Processing disk {blk.path}.")
@@ -59,8 +85,9 @@ async def auto_erase_disks(
         # Start erasure task.
         tasks.append(asyncio.create_task(erasure.run()))
 
+    logger.warning(f"Disks [{', '.join(disks)}] not found.")
     [await task for task in tasks]
-    logger.warning(f">>> {erasures}")
+    logger.debug(f">>> {erasures}")
     return [r.export() for r in erasures]
 
 
@@ -74,7 +101,7 @@ class ErasureProcess:
             # Todo: convert to schema.
             pass
 
-        logger.info(f"Start erasing process for device {block.path}.")
+        logger.info(f"Selected device {block.path} for sanitization.")
         self._device = schemas.Device(
             export_data=schemas.ExportData(
                 block=block,  # Data from `lsblk`
@@ -217,6 +244,7 @@ class ErasureProcess:
 
             elif self._certificate.validation.data[s] == cmd3.stdout:
                 logger.warning(
+                    f"{self.blk.path}: "
                     f"Validation failed: Sector {s} has not been changed")
                 return False
             # Successful write, update the sector with new value.

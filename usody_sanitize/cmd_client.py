@@ -19,25 +19,27 @@ from usody_sanitize import __version__ as app_version
 logging.getLogger("CMD")
 
 
-def run_cmd(args):
-    # Select method.
-    if args.method:
-        try:
-            method = DefaultMethods[args.method.upper()].value
-        except ValueError:
-            sys.exit("Sanitize method not valid.")
-    else:
-        # Default method when not set by args.
-        method = DefaultMethods.BASIC.value
-    print(f"Using sanitize method '{method.name}'.")
+def run_cmd():
+    args = parse_args()
+    configure_loggers(args.log_level)
 
     # Run erasures.
-    result = run_coroutine(auto_erase_disks(method, args.device))
+    result = run_coroutine(auto_erase_disks(args.method, args.device))
 
-    # Todo: Add output arg to export the result on a file.
-    print(json.dumps(result, indent=4))
+    # Todo: Add function to handle the result exports.
+    logging.debug(json.dumps(result, indent=4))
     with open('/tmp/erasure_output.json', 'w') as _fh:
         json.dump(result, _fh, indent=4)
+
+
+def configure_loggers(level="INFO"):
+    logging.basicConfig(
+        force=True,
+        stream=sys.stdout,
+        level=getattr(logging, level.upper()),
+        format="%(asctime)s - %(levelname)s: %(message)s"
+    )
+
 
 def run_coroutine(coro):
     """Forces to run the function in a new async loop."""
@@ -64,8 +66,15 @@ def parse_args():
     parser.add_argument('--version', action='version', version=app_version,
                         help='show the version of usody_sanitize')
 
+    parser.add_argument('-l', '--log-level', dest='log_level', default='INFO',
+                        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR',
+                                 'CRITICAL'],
+                        help='set the logging level (default: %(default)s)')
+
+    # Todo: Add output/export option.
+
     return parser.parse_args()
 
 
 if __name__ == '__main__':
-    run_cmd(parse_args())
+    run_cmd()

@@ -11,6 +11,11 @@ certificate of sanitize process that can be used to verify the authenticity of t
 process. This tool is perfect for businesses and individuals who need to
 securely and permanently remove sensitive data from their disks.
 
+## Todo
+
+- Test the command with more errors on erasures.
+- Better command output handler.
+- Improve the export of the erasures into json files.
 
 ## Installation
 
