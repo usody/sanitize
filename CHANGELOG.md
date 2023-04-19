@@ -2,6 +2,10 @@
 
 Better description of changes on each release.
 
+### 0.1.0-beta5
+
+- Fixes typos and errors.
+
 ### 0.1.0-beta2
 
 - Created a script to be run as a command.
