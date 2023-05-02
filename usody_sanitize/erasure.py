@@ -29,6 +29,7 @@ class DefaultMethods(Enum):
 async def auto_erase_disks(
         method: Optional[str] = None,
         disks: Optional[List[str]] = None,
+        confirm: bool = False,
 ) -> Optional[List[dict]]:
     """A main point to erase all disks unless disks mounted at root "/"
     then generates a certificate as JSON with all the information of
@@ -39,6 +40,8 @@ async def auto_erase_disks(
         be selected.
     :param Optional[List[str]] disks: A list of disks to be erased. If
         none, all disks detected will be erased and sanitized.
+    :param boo confirm: Output the disks going to be deleted/wiped
+        before to proceed to confirm the erasure.
 
     :return:
     """
@@ -73,20 +76,31 @@ async def auto_erase_disks(
         # Detect if one of those drives has a mounted partition as root.
         if blk.children:
 
-            if any([cld.mountpoint == "/" for cld in blk.children
+            # Find if any partition of the current disk is mounted and skip.
+            if any([cld.mountpoint is not None for cld in blk.children
                     if cld.mountpoint is not None]):
                 logger.warning(f"Skipping disk {blk.path} mounted as root.")
                 continue
 
+        # Init the erasure process class.
         logger.debug(f"Processing disk {blk.path}.")
         erasure = ErasureProcess(blk, method)
         erasures.append(erasure)
 
-        # Start erasure task.
-        tasks.append(asyncio.create_task(erasure.run()))
-
+    # Notify the disks not found.
     if disks:
         logger.warning(f"Disks [{', '.join(disks)}] not found.")
+
+    # Confirmation before erasure.
+    if confirm and erasures:
+        r = input(f"Press ENTER to erase: "
+                  f"{' '.join(e.blk.path for e in erasures)}")
+        if r.lower().startswith("n"):
+            sys.exit("Process interrupted by user.")
+
+    # Start sanitize process here..
+    for erase in erasures:
+        tasks.append(asyncio.create_task(erase.run()))
 
     [await task for task in tasks]
     logger.debug(f">>> {erasures}")
