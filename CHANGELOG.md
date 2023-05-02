@@ -2,6 +2,11 @@
 
 Better description of changes on each release.
 
+### 0.1.0-beta7
+
+- Add confirmation before erasing the disks.
+- Never erase a disk that is currently mounted. (Avoid erasing live USBs)
+
 ### 0.1.0-beta6
 
 - Allow to be installed on Python 3.8.
