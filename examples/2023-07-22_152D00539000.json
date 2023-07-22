@@ -1,0 +1,1302 @@
+{
+  "steps": [],
+  "validation": {
+    "result": false,
+    "commands": [
+      {
+        "description": "Read data from sector 0 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=0 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0349994 s, 14.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.7994807,
+        "end_time": 1689976137.8814604
+      },
+      {
+        "description": "Read data from sector 69460271 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=69460271 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0157154 s, 32.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.8849652,
+        "end_time": 1689976137.9179244
+      },
+      {
+        "description": "Read data from sector 138920543 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=138920543 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0158564 s, 32.3 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.9208043,
+        "end_time": 1689976137.953519
+      },
+      {
+        "description": "Read data from sector 208380815 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=208380815 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.01451 s, 35.3 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.9563708,
+        "end_time": 1689976137.9874384
+      },
+      {
+        "description": "Read data from sector 277841087 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=277841087 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0108272 s, 47.3 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.9907126,
+        "end_time": 1689976138.0223026
+      },
+      {
+        "description": "Read data from sector 347301359 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=347301359 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0169573 s, 30.2 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.0255477,
+        "end_time": 1689976138.057737
+      },
+      {
+        "description": "Read data from sector 416761631 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=416761631 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0129308 s, 39.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.06061,
+        "end_time": 1689976138.092303
+      },
+      {
+        "description": "Read data from sector 486221903 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=486221903 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0185174 s, 27.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.0963485,
+        "end_time": 1689976138.1295793
+      },
+      {
+        "description": "Read data from sector 555682175 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=555682175 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0152546 s, 33.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.1314676,
+        "end_time": 1689976138.1623762
+      },
+      {
+        "description": "Read data from sector 625142447 to validate if have been changed.",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=625142447 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0134987 s, 37.9 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.1652167,
+        "end_time": 1689976138.1986578
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=0",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0127636 s, 40.1 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.2032819,
+        "end_time": 1689976138.2428515
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=69460271",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000409141 s, 1.3 MB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.2469645,
+        "end_time": 1689976138.2659252
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=138920543",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0207618 s, 24.7 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.2826214,
+        "end_time": 1689976138.3177161
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=208380815",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0270855 s, 18.9 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.319069,
+        "end_time": 1689976138.3610992
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=277841087",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0303562 s, 16.9 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.3637059,
+        "end_time": 1689976138.4103684
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=347301359",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0230663 s, 22.2 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.4123163,
+        "end_time": 1689976138.4542956
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=416761631",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0249516 s, 20.5 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.4574804,
+        "end_time": 1689976138.4987931
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=486221903",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0331119 s, 15.5 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.5001328,
+        "end_time": 1689976138.5498388
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=555682175",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.023563 s, 21.7 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.5668302,
+        "end_time": 1689976138.6061199
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=625142447",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000192459 s, 2.7 MB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.60767,
+        "end_time": 1689976138.6428123
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sdb bs=512 count=1 skip=0 | xxd -ps",
+        "stdout": "000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n0000",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0336582 s, 15.2 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.6474955,
+        "end_time": 1689976138.7008553
+      }
+    ],
+    "data": {
+      "0": "000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n0000",
+      "69460271": "000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n0000",
+      "138920543": "000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n0000",
+      "208380815": "000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n000000000000000000000000000000000000000000000000000000000000\n0000",
+      "277841087": "650ce66e851a99c6c65bf60de2993d2ea9e572d27cad701bedc6e795c7e2\nec2cefd39a74ed333ab38e31c170cafe9e73e4114560beb67cab7c634143\n452d6f340009a8ed3ce3a1ca14623bde60d95244ea97a5a84d2154ca8495\n0dc9c27dfec386a6b0c389518d9db3c87c14a2ce588c65fd35b31e897da2\n1e8a6ce0076aa38e1054519aa5de3759a7b36d4981c5d5e7c30a9ae19317\n84b1a1f092a95a35376a8988042f663c880deff55671ba2c587d36f25fca\n09e37baad30d532d438a97cc129cfb79d88386c778dd38330990b03f820f\n098bf28536c59289f2d5148aa226269d9ffe2126c59903fecc0c8e7d4b11\n8c559c7fdad2446c5c374270c1e496e78136e5a25caa3c5fa8086b3785b6\n48120be491e5b7d552130c9483cd7819b4f94f999cab44d80aece0752366\n2c6b783750091d07de6f1aeb039db87bb66d74060610b14ae8bc37c9315a\n2f5dc6a79516b0b21d8e21377924d4329f8a9f1390a52442f00cfe27d52f\n81048d47ab225d5bd47aeaf5b163198595b81034cba0daefe2cafce0f1d1\n1072d69dba81bf17dd9392c788432aa1c9c059d9f42479ce145c98103c89\ne14cfcb7e9b639a8cd163b5fddc3a307646cc7bd45bce2be8af61a230657\nace7a3a89f8d5ed8352cee718bcb342ed2999a9a56df56389ee02eb80334\n0fb01cb358bb40b79375e381e66e4c1b9d1eb437b80a170e43b5ef716df2\na67d",
+      "347301359": "7d65a4660bd177e4a2ac21d6fae29953b72787a422abee5d199b521f63ac\n2de011d1471da2be01446a221a6404b3b7bbdb3e60fde94e5a02e9ac224c\n584f2d6a207487c23288069caa2000afd3b76aaef5caabdf1805e102b103\n4e0a527b7472effb3421833abd2d5abddc2e7447dc6a1188492a8d2a2c3f\n2e7a4980f6bdf3e5b827073b62c468bc8245eaf68cc7609d4fa9c7dcd4f3\n1b026e648264217549d99d5014ff157dbb97c2a68d4e6deeebbc97b3986b\na6b46d1418f0783a65c2130212280127a5bdbe67634cb5d03aa08cd15324\n3dfad8aa0ef19a872b00493e025b6604830bc14172248d27f4c7c880991b\na4d6157d80246e1bab991bf4d71d4f3e21d249e214bc06a1e3fa69ab7a02\nc71fd8dc9c58000a73aba38e9f7aacefb8cdc102b0d5beb677a1b1e04d2b\ne2144abaf0e612f1f0869c93143c0ec02bc68eecc83ec286f43928a51975\nd1fb891bb57902c76af24d0786624394226e5ab05a23ee1ca9e355d1886e\n465969cf751e4977e6b36933baef95fd83b86bde68c60157e2aa3a387cc2\na6c21c1092912edb08148e71484961dd46e495b2c2fe78c3555a6e8f92ea\n5139ac6d493efe7719068ca878d4f1d9b137bd47e9804561439abcb1294e\n9b7a8748e8d086e648a0edd44865a8393e5970fba05a7be5bbbf7f7770a8\nc60c234d540b1edaf1667ade3ac243e2fb813b6c7ddcc6f8c181b741f928\ne9bf",
+      "416761631": "a4daea8c2f650742b86bc67f0c924f39b7f7f836af3ae898795533d6ac9a\nc15074abdda310e4e6c950ac485c3e9895f58f8d2b3ec813d64168091714\na3d965188442bb9526a15e764ea6d28c3e6882cdf5ad0cbdc1e2ff29ec16\n3e8fefa3a774e563090b046782520d54df4cbc6119b20e256fcf086ef9f4\n85378374da2be8bf8ef1ca92584ce566a1c4b25d25cb0f33f17f03f9edfc\ned723370e70d9bcfcc29c196bc19e3a17f846531e18afdf1bdee70c0e75d\nbcd4d0ef44b7fce086c809475fc5614266e0c6cb12a7550f9813fd08d3e4\n6690b8367ffced7cdc7344e6bba3ab1ce512fcabdd0e53331deb461af419\nfe5aa9b69029b37da58ff0e975ab8d21c77233c41e10d27143f05c890a50\na309aa4cbf3a7572b71a02a804775391981b03cbdf21dcb1921fa1efa9ac\n3f4cb5ea9874240ee7dc28e9842c60d7bdf9f2c1c4d1e2a08375c0246469\nd0a3b5858d4dfab25be18e84ca12b02ae96e23dc2fe8ad118830864855ea\nb1258e66ab1bb4a5cd0f865b93506d447a57b29e33e186e0f20e11795766\n63088bf16f360d23dbda326136c6b1a30a2cfabcca2d9d500e8f5e1f08b5\n856cbe105d2d476a50224582847b48351e5261190e2b46ab7b543bda7343\n8ff8af4d090d7a5077ca72bc4df637952c56e88d6ff6b9b5a2340add0e7d\n209e76d0eb7fdd66cf543041117d384813649efbf10df1aac393dfcd70ed\n4a91",
+      "486221903": "b720441551f20d07672810c44c6386d36a91bd98b1d8ac34d607e5a0b793\nf86eb33c83042e900c95b81c590480dfd7ea709582216d2e5643363be4ed\ncfdc5c8218df87467093dc28af352d2f15041a85999ca707cbfd4a01382e\nee070a4a8a222a11699aa445c2537aef838ff49d158d39bc9404b9df05f1\n0df4f9183e833a6894a30238e8c58b63b40ef2a8ab0736e5c3cae97ca9ef\n6eb7e367cf21ea098a7ead8cb6955141f80650ebaefbf2e4e0b6afca3258\nb9a00f9c07debdf1e8476f95d4252a2567232bb70edab200be93b66d5de9\nc61689d5b291b46f829cb7f2318b175bb07e7edc358cb6e88d747b43e2d8\n2ca8eeb67da047310fc9cdc6bbfe51d35a0251d8de8765946ff208ea35ea\nc26292b01810505f415f280f26e40d77b767790840578fa5ebfe97f4e8cc\ndeaa2e715a4681aaa5c20aced130b2dfa7694621718678012b64ffc258e8\n8f3692bda7ed042897a9eba177bcd1299b7992e29a0468120594760456ce\nece5057fa3ac6ca7d50350c0a5c87c76f118ef84fa8988629c8df612914d\ne17e32e6fdd592697c676ccd271195a48886bc770ab60192189d1f0fafb1\n5c902f8e762c640995e07001ad9813423c9bc9f812d3ae1366c6b085d560\n3631f065c0679124702604e028b2783bf4b4d6bdace8915afcf721ac7cf6\n0cb328fd18e864aa0cd4d010b4f8c22d33b7e109748ef205e8eefc099a79\n00a7",
+      "555682175": "58018a03801aa4f20df65b3a252873b2fcbdd10603b73e6554fb52f0f9a2\nfb51a38554239ff915acef71e614995ac79617989c1b4fdb80a3d6d293cf\n748e201813753bb36e515f5dc246715ba038f1b7d08ed21f6952c23f2455\n0e99e32eb1f7a3ecaa113d096eff4fe05bef184ca7e9da790843cccb82f0\n20908904bf3afb6227a57464aee264fec2bfeddb0b94c4e60ecc29da97ac\ncab83c54bcfb8eb75eb55cd21a0ab47e08773df652488a162e98e258727a\n043d324091ee3c1fa59ad5016cef0b206d1497aa0ae9f294ff212de2799f\n5c7ddc8ebd6d7cf98d21936222ff512d20be41b7684ba15ae0a07b0d82f4\nacde71896c2ff6e8288309bce52bbb3659dbf49a935ce634b7c6d432d357\n277f359808a2c7ff8af08294ac68bf679e184393b3d6ef990aa65fded932\n3500b16b98ba0d60b997503b2bfca3eb634203a6d5b67cc44f866bae6544\ne09a449205dc4c123c05aa8c40d588e4c0ec26c492fb7a0fbfca952a78fa\n6e5995b2eb9a8f37adcb3c57587c2ce060edcc86b15f812b6e41f5036b6e\nfedac7938cb22d1be9dae725313fa15e1f024bec88fc4b0a27b94b1dbcb6\n8bba90524d1d047b38ed551f12875eb3e57eb5306a3e2cb548536e93702a\n49fbe5da4d32f751ad2f3e034f508aad046f2bb99f95f7cb4a3f1eb8d28f\ne31c8ac8f6d8faed29a81c68ab6bb83519bca4447643da6d0e24ad2cdd7f\nbbc0",
+      "625142447": "7f5ef410a98cd0869362ac1956c73d31b15fe667f7f4b92f5b145364fa3d\n987a9b8c8a44185acbabbc77c4133f0144f0602a57581e10877925dbdd1f\n187599b30223f81a7ec3c63a3a8a4d798c9169ecbcc144dad1cc54f6a731\n16bfa7af72a9d36ac3512d898b6814d9e1a06a4b8c260cd101dd9d55d444\n86ea032d9975d66ce09abd0d234975372257d78ca264b3ae35b48bd2095f\n168f4919bde38e934f6e2d0d7c5156f18878486004eac4b798f96b24cb74\n83e104cdfac1b08854fff7820c73d362645bdaadbbdf977f963078025443\n76d7247aa41e3b54a790549e126011e5c375409d22fc7cba7b13eaf4153e\n378b155c06ba7a410e21d162bfe3c3d0c8864609236805a02280b30c74c8\n4aac536008591a829b28a46c8b63504e3418d47a21f7e2269705a74a111b\n125cc766bccfbfd6525afef6c7895917d78d2fab0751a3ea773aef1e8500\n3a975c01fd18d1bdee2317ed19de7672f54e0025f907769cf1edd7e00c5c\ne146f33d47f15618ae443bc53154a4a8c799f6c7beefce348cc02263a02e\nbf8174b2bfbba315d451590f178b64bb332b5429f21318c047a480690721\n97c6a20b7961c71c769b6ed0aa855b0e408e3994b72ba7cfecef746c587b\n8df04230fbbb91c2d7085d45d808ca33160ac1509f787b46476735bbd48e\n37617e79917934233c0b2b995103a11b36b826f708c56f830bb6eb4172bf\ncfa9"
+    }
+  },
+  "device_info": {
+    "manufacturer": "TOSHIBA ",
+    "model": "MK3259GSXP",
+    "serial_number": "152D00539000",
+    "connector": "block:scsi:usb:pci:platform",
+    "size": "298.1G",
+    "storage_medium": "HDD",
+    "export_data": {
+      "block": {
+        "path": "/dev/sdb",
+        "rota": true,
+        "ptuuid": null,
+        "serial": "152D00539000",
+        "name": "sdb",
+        "size": "298.1G",
+        "mode": "brw-rw----",
+        "model": "MK3259GSXP",
+        "vendor": "TOSHIBA ",
+        "uuid": null,
+        "type": "disk",
+        "hotplug": "True",
+        "label": null,
+        "state": "running",
+        "phy_sec": 512,
+        "mountpoint": null,
+        "children": null,
+        "parttype": null,
+        "wsame": "0B",
+        "dax": false,
+        "partflags": null,
+        "disc-gran": "0B",
+        "disc-max": "0B",
+        "tran": "usb",
+        "fstype": null,
+        "ra": 128,
+        "kname": "sdb",
+        "group": "disk",
+        "min-io": 512,
+        "wwn": null,
+        "pttype": null,
+        "opt-io": 0,
+        "rq-size": 2,
+        "maj:min": "8:16",
+        "fsver": null,
+        "fsuse%": null,
+        "ro": false,
+        "rev": "0520",
+        "disc-zero": false,
+        "alignment": 0,
+        "sched": "mq-deadline",
+        "disc-aln": 0,
+        "partuuid": null,
+        "owner": "root",
+        "fsused": null,
+        "parttypename": null,
+        "fsavail": null,
+        "log-sec": 512,
+        "pkname": null,
+        "partlabel": null,
+        "hctl": "1:0:0:0",
+        "rand": true,
+        "subsystems": "block:scsi:usb:pci:platform",
+        "rm": false,
+        "zoned": "none",
+        "fssize": null
+      },
+      "smart": {
+        "json_format_version": [
+          1,
+          0
+        ],
+        "smartctl": {
+          "version": [
+            7,
+            2
+          ],
+          "svn_revision": "5155",
+          "platform_info": "aarch64-linux-5.10.0-23-arm64",
+          "build_info": "(local build)",
+          "argv": [
+            "smartctl",
+            "-aj",
+            "/dev/sdb"
+          ],
+          "messages": [
+            {
+              "string": "Warning: This result is based on an Attribute check.",
+              "severity": "warning"
+            }
+          ],
+          "exit_status": 4
+        },
+        "local_time": {
+          "time_t": 1689976133,
+          "asctime": "Fri Jul 21 21:48:53 2023 UTC"
+        },
+        "device": {
+          "name": "/dev/sdb",
+          "info_name": "/dev/sdb [SAT]",
+          "type": "sat",
+          "protocol": "ATA"
+        },
+        "model_family": "Toshiba 2.5\" HDD MK..59GSXP (AF)",
+        "model_name": "TOSHIBA MK3259GSXP",
+        "serial_number": "42T9CPEGT",
+        "wwn": {
+          "naa": 5,
+          "oui": 57,
+          "id": 16969164883
+        },
+        "firmware_version": "GN003J",
+        "user_capacity": {
+          "blocks": 625142448,
+          "bytes": 320072933376
+        },
+        "logical_block_size": 512,
+        "physical_block_size": 4096,
+        "rotation_rate": 5400,
+        "form_factor": {
+          "ata_value": 3,
+          "name": "2.5 inches"
+        },
+        "trim": {
+          "supported": false
+        },
+        "in_smartctl_database": true,
+        "ata_version": {
+          "string": "ATA8-ACS (minor revision not indicated)",
+          "major_value": 504,
+          "minor_value": 0
+        },
+        "sata_version": {
+          "string": "SATA 2.6",
+          "value": 31
+        },
+        "interface_speed": {
+          "max": {
+            "sata_value": 6,
+            "string": "3.0 Gb/s",
+            "units_per_second": 30,
+            "bits_per_unit": 100000000
+          },
+          "current": {
+            "sata_value": 2,
+            "string": "3.0 Gb/s",
+            "units_per_second": 30,
+            "bits_per_unit": 100000000
+          }
+        },
+        "smart_support": null,
+        "smart_status": {
+          "passed": true
+        },
+        "power_cycle_count": 811,
+        "temperature": {
+          "current": 36
+        },
+        "ata_smart_selective_self_test_log": {
+          "revision": 1,
+          "table": [
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            },
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            },
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            },
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            },
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            }
+          ],
+          "flags": {
+            "value": 0,
+            "remainder_scan_enabled": false
+          },
+          "power_up_scan_resume_minutes": 0
+        },
+        "ata_smart_attributes": {
+          "revision": 16,
+          "table": [
+            {
+              "id": 1,
+              "name": "Raw_Read_Error_Rate",
+              "value": 100,
+              "worst": 100,
+              "thresh": 50,
+              "when_failed": "",
+              "flags": {
+                "value": 11,
+                "string": "PO-R-- ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": true,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 2,
+              "name": "Throughput_Performance",
+              "value": 100,
+              "worst": 100,
+              "thresh": 50,
+              "when_failed": "",
+              "flags": {
+                "value": 5,
+                "string": "P-S--- ",
+                "prefailure": true,
+                "updated_online": false,
+                "performance": true,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 3,
+              "name": "Spin_Up_Time",
+              "value": 100,
+              "worst": 100,
+              "thresh": 1,
+              "when_failed": "",
+              "flags": {
+                "value": 39,
+                "string": "POS--K ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": true,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 1180,
+                "string": "1180"
+              }
+            },
+            {
+              "id": 4,
+              "name": "Start_Stop_Count",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 1042,
+                "string": "1042"
+              }
+            },
+            {
+              "id": 5,
+              "name": "Reallocated_Sector_Ct",
+              "value": 100,
+              "worst": 100,
+              "thresh": 50,
+              "when_failed": "",
+              "flags": {
+                "value": 51,
+                "string": "PO--CK ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 7,
+              "name": "Seek_Error_Rate",
+              "value": 100,
+              "worst": 100,
+              "thresh": 50,
+              "when_failed": "",
+              "flags": {
+                "value": 11,
+                "string": "PO-R-- ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": true,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 8,
+              "name": "Seek_Time_Performance",
+              "value": 100,
+              "worst": 100,
+              "thresh": 50,
+              "when_failed": "",
+              "flags": {
+                "value": 5,
+                "string": "P-S--- ",
+                "prefailure": true,
+                "updated_online": false,
+                "performance": true,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 9,
+              "name": "Power_On_Hours",
+              "value": 90,
+              "worst": 90,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 4173,
+                "string": "4173"
+              }
+            },
+            {
+              "id": 10,
+              "name": "Spin_Retry_Count",
+              "value": 120,
+              "worst": 100,
+              "thresh": 30,
+              "when_failed": "",
+              "flags": {
+                "value": 51,
+                "string": "PO--CK ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 12,
+              "name": "Power_Cycle_Count",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 811,
+                "string": "811"
+              }
+            },
+            {
+              "id": 191,
+              "name": "G-Sense_Error_Rate",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 71,
+                "string": "71"
+              }
+            },
+            {
+              "id": 192,
+              "name": "Power-Off_Retract_Count",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 42,
+                "string": "42"
+              }
+            },
+            {
+              "id": 193,
+              "name": "Load_Cycle_Count",
+              "value": 96,
+              "worst": 96,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 44428,
+                "string": "44428"
+              }
+            },
+            {
+              "id": 194,
+              "name": "Temperature_Celsius",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 34,
+                "string": "-O---K ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 236224380964,
+                "string": "36 (Min/Max 18/55)"
+              }
+            },
+            {
+              "id": 196,
+              "name": "Reallocated_Event_Count",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 197,
+              "name": "Current_Pending_Sector",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 198,
+              "name": "Offline_Uncorrectable",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 48,
+                "string": "----CK ",
+                "prefailure": false,
+                "updated_online": false,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 199,
+              "name": "UDMA_CRC_Error_Count",
+              "value": 200,
+              "worst": 253,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 220,
+              "name": "Disk_Shift",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 2,
+                "string": "-O---- ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 36,
+                "string": "36"
+              }
+            },
+            {
+              "id": 222,
+              "name": "Loaded_Hours",
+              "value": 99,
+              "worst": 99,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 736,
+                "string": "736"
+              }
+            },
+            {
+              "id": 223,
+              "name": "Load_Retry_Count",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 224,
+              "name": "Load_Friction",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 34,
+                "string": "-O---K ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 226,
+              "name": "Load-in_Time",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 38,
+                "string": "-OS--K ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": true,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 324,
+                "string": "324"
+              }
+            },
+            {
+              "id": 240,
+              "name": "Head_Flying_Hours",
+              "value": 100,
+              "worst": 100,
+              "thresh": 1,
+              "when_failed": "",
+              "flags": {
+                "value": 1,
+                "string": "P----- ",
+                "prefailure": true,
+                "updated_online": false,
+                "performance": false,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            }
+          ]
+        },
+        "ata_smart_data": {
+          "offline_data_collection": {
+            "status": {
+              "value": 0,
+              "string": "was never started"
+            },
+            "completion_seconds": 120
+          },
+          "self_test": {
+            "status": {
+              "value": 0,
+              "string": "completed without error",
+              "passed": true
+            },
+            "polling_minutes": {
+              "short": 2,
+              "extended": 100
+            }
+          },
+          "capabilities": {
+            "values": [
+              91,
+              3
+            ],
+            "exec_offline_immediate_supported": true,
+            "offline_is_aborted_upon_new_cmd": false,
+            "offline_surface_scan_supported": true,
+            "self_tests_supported": true,
+            "conveyance_self_test_supported": false,
+            "selective_self_test_supported": true,
+            "attribute_autosave_enabled": true,
+            "error_logging_supported": true,
+            "gp_logging_supported": true
+          }
+        },
+        "ata_sct_capabilities": {
+          "value": 61,
+          "error_recovery_control_supported": true,
+          "feature_control_supported": true,
+          "data_table_supported": true
+        },
+        "ata_smart_error_log": {
+          "summary": {
+            "revision": 1,
+            "count": 0
+          }
+        },
+        "power_on_time": {
+          "hours": 4173
+        },
+        "ata_smart_self_test_log": {
+          "standard": {
+            "revision": 1,
+            "table": [
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1412
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1407
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1402
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1402
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 22,
+                  "string": "Aborted by host",
+                  "remaining_percent": 60
+                },
+                "lifetime_hours": 1402
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1381
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 1380
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 1380
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 1380
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 1380
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 22,
+                  "string": "Aborted by host",
+                  "remaining_percent": 60
+                },
+                "lifetime_hours": 1380
+              }
+            ],
+            "count": 21,
+            "error_count_total": 0,
+            "error_count_outdated": 0
+          }
+        }
+      }
+    }
+  },
+  "method": {
+    "name": "Basic Erasure",
+    "standard": "",
+    "description": "A single-pass overwrite of the entire drive with zeros. This method is relatively fast and simple, but it may not be completely effective in destroying all traces of the original data.",
+    "removal_process": "Overwriting",
+    "verification_enabled": true,
+    "bad_sectors_enabled": false,
+    "warnings": null,
+    "overwriting_steps": [
+      {
+        "tool": "shred",
+        "pattern": "random"
+      }
+    ]
+  },
+  "result": false,
+  "version": "0.1.1-beta1"
+}

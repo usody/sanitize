@@ -2,7 +2,7 @@
 from usody_sanitize import schemas
 
 
-BASIC = schemas.ErasureMethod(
+BASIC = schemas.Method(
     name="Basic Erasure",
     # https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=917935
     standard="",
@@ -11,13 +11,14 @@ BASIC = schemas.ErasureMethod(
                 " but it may not be completely effective in destroying"
                 " all traces of the original data.",
     removal_process="Overwriting",
-    program="shred",
     verification_enabled=True,
     bad_sectors_enabled=False,
-    overwriting_steps=1,
+    overwriting_steps=[
+        schemas.Execution(tool="shred", pattern="random"),
+    ],
 )
 
-BASELINE = schemas.ErasureMethod(
+BASELINE = schemas.Method(
     name="Baseline Erasure",
     standard="NIST, Infosec HGM Baseline",
     description="Method for securely erasing data in compliance"
@@ -29,13 +30,14 @@ BASELINE = schemas.ErasureMethod(
                 " data has been written correctly, and a final"
                 " validation confirms that all data has been deleted.",
     removal_process="Overwriting",
-    program="badblocks",
     verification_enabled=False,
     bad_sectors_enabled=True,
-    overwriting_steps=1,
+    overwriting_steps=[
+        schemas.Execution(tool="badblocks", pattern="random"),
+    ],
 )
 
-CRYPTOGRAPHIC = schemas.ErasureMethod(
+CRYPTOGRAPHIC_ATA = schemas.Method(
     name="Baseline Cryptographic",
     standard="NIST, Infosec HGM Baseline",
     description="Method for securely erasing data in compliance"
@@ -47,11 +49,31 @@ CRYPTOGRAPHIC = schemas.ErasureMethod(
                 " data has been written correctly, and a final"
                 " validation confirms that all data has been deleted.",
     removal_process="Overwriting",
-    program="hdparm",
     verification_enabled=False,
+    overwriting_steps=[
+        schemas.Execution(tool="hdparm"),
+    ],
 )
 
-ENHANCED = schemas.ErasureMethod(
+CRYPTOGRAPHIC_NVME = schemas.Method(
+    name="Baseline Cryptographic",
+    standard="NIST, Infosec HGM Baseline",
+    description="Method for securely erasing data in compliance"
+                " with HMG Infosec Standard 5 guidelines includes"
+                " a single step of a random write process on the"
+                " full disk. This process overwrites all data with"
+                " a randomized pattern, ensuring that it cannot be"
+                " recovered. Built-in validation confirms that the"
+                " data has been written correctly, and a final"
+                " validation confirms that all data has been deleted.",
+    removal_process="Overwriting",
+    verification_enabled=False,
+    overwriting_steps=[
+        schemas.Execution(tool="nvme"),
+    ],
+)
+
+ENHANCED = schemas.Method(
     name="Enhanced Erasure",
     standard="HMG Infosec Standard 5",
     description="Method for securely erasing data in compliance"
@@ -63,8 +85,11 @@ ENHANCED = schemas.ErasureMethod(
                 " data has been written correctly, and a final"
                 " validation confirms that all data has been deleted.",
     removal_process="Overwriting",
-    program="badblocks",
     verification_enabled=True,
     bad_sectors_enabled=True,
-    overwriting_steps=3,
+    overwriting_steps=[
+        schemas.Execution(tool="badblocks", pattern="random"),
+        schemas.Execution(tool="badblocks", pattern="random"),
+        schemas.Execution(tool="shred", pattern="zeros"),
+    ],
 )

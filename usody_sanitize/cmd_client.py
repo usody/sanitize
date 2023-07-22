@@ -1,14 +1,14 @@
-import sys
+import argparse
+import asyncio
+import datetime
 import json
 import logging
-import asyncio
-import argparse
+import pathlib
+import sys
 
 try:
     from usody_sanitize.erasure import DefaultMethods, auto_erase_disks
 except ModuleNotFoundError:
-    import pathlib
-
     sys.path.append(
         pathlib.Path(__file__).parent.parent.absolute().as_posix()
     )
@@ -24,7 +24,6 @@ def parse_args():
     parser.add_argument('-m', '--method', type=str, help='sanitize method',
                         choices=['BASIC', 'BASELINE', 'ENHANCED'])
 
-    # Select the
     disk = parser.add_mutually_exclusive_group(required=True)
     disk.add_argument('-d', '--device', type=str, action='append',
                       help='path to the /dev/{disk} E.G.: /dev/sda')
@@ -42,7 +41,8 @@ def parse_args():
                                  'CRITICAL'],
                         help='set the logging level (default: %(default)s)')
 
-    # Todo: Add output/export option.
+    parser.add_argument('-o', '--output', default=".",
+                        help='set the output path to save the log file')
 
     return parser.parse_args()
 
@@ -55,11 +55,25 @@ def run_cmd():
     result = run_coroutine(
         auto_erase_disks(args.method, args.device, confirm=args.confirm)
     )
-
-    # Todo: Add function to handle the result exports.
     logging.debug(json.dumps(result, indent=4))
-    with open('/tmp/erasure_output.json', 'w') as _fh:
-        json.dump(result, _fh, indent=4)
+
+    if not result:
+        return  # End here.
+
+    # Create export directory.
+    output_path = pathlib.Path(args.output)
+    if not output_path.exists():
+        output_path.mkdir(parents=True, exist_ok=True)
+        logging.debug(f"Creating directory `{output_path}`.")
+
+    # Export the output to a file.
+    for item in result:
+        item_serial_number = item.get('device_info', {}).get('serial_number')
+        current_date = datetime.datetime.now().date().isoformat()
+
+        file_name = f"{current_date}_{item_serial_number}.json"
+        with open(output_path / file_name, 'w') as _fh:
+            json.dump(item, _fh, indent=4)
 
 
 def configure_loggers(level="INFO"):

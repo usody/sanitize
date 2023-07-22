@@ -1,11 +1,17 @@
-import re
 import asyncio
 import logging
-
+import re
+from enum import Enum
 from typing import Optional
+
 from usody_sanitize import schemas
 
 logger = logging.getLogger(__name__)
+
+
+class PatternsModes(Enum):
+    ZEROS = 1
+    RANDOM = 2
 
 
 def get_spaced_numbers(max_num: int, items: int):
@@ -24,7 +30,7 @@ def get_spaced_numbers(max_num: int, items: int):
 
 
 async def print_shred_progress(
-        cmd: schemas.ErasureCommand,
+        cmd: schemas.Exec,
         process: asyncio.subprocess.Process
 ):
     """Example how to process `shred` output."""
@@ -33,15 +39,13 @@ async def print_shred_progress(
 
 
 async def print_badblocks_progress(
-        cmd: schemas.ErasureCommand,
+        cmd: schemas.Exec,
         process: asyncio.subprocess.Process
 ):
     """Example how to process `badblocks` output."""
     async for line in process.stderr:
         clean_line = line.decode('UTF-8').replace('\b', '').replace('\n', '')
         logger.debug(f"{cmd.command}: {clean_line}")
-
-    logger.debug("OUT")
 
 
 def find_text(re_expression: str, string: str) -> Optional[str]:
