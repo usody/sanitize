@@ -1,6 +1,5 @@
 import json
 import logging
-import sys
 from pathlib import Path
 from typing import Union, Optional
 
@@ -157,7 +156,7 @@ class ErasureProcess:
         :return:
         """
         if self.blk.phy_sec != self.smart.logical_block_size:
-            sys.exit("Information missmatch, can not continue.")
+            logger.warning("Information missmatch, can not continue.")
 
         bs = self.smart.logical_block_size
         max_sector = self.smart.user_capacity.bytes // bs
