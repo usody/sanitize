@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "usody-sanitize"
-version = "0.1.1-beta1"
+version = "0.1.1-beta2"
 
 description = "A tool to securely erase/wipe data on disks HDD and SSD with a proper sanitization process."
 repository = "https://github.com/usody/sanitize"
 authors = ["blkpws <me@blkpws.xyz>"]
-readme = "README.md"
+readme = ["CHANGELOG.md", "README.md"]
+license = "GNU"
 
 [tool.poetry_bumpversion.file."usody_sanitize/__init__.py"]
 
