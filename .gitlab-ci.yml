@@ -8,10 +8,10 @@ release:
   only:
     - tags
   script:
-    - /etc/poetry/bin/poetry version $CI_COMMIT_TAG
+    - poetry version $CI_COMMIT_TAG
     - git cliff -o CHANGELOG.md
-    - /etc/poetry/bin/poetry config pypi-token.pypi $POETRY_PYPI_TOKEN_PYPI
-    - /etc/poetry/bin/poetry publish --build
+    - poetry config pypi-token.pypi $POETRY_PYPI_TOKEN_PYPI
+    - poetry publish --build
   artifacts:
     paths:
       - dist/*.tar.gz
