@@ -23,6 +23,11 @@ mdx-include = "^1.4.2"
 mkdocs-markdownextradata-plugin = "^0.2.5"
 
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+coverage = "^7.3.2"
+
 [tool.poetry.scripts]
 sanitize = "usody_sanitize.cmd_client:run_cmd"
 

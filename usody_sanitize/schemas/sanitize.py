@@ -63,7 +63,6 @@ class Step(BaseModel):
 
     def end(self):
         self.end_time = time.time()
-        # Todo: Remove this duration variable once the tool is more robust.
         self.duration = self.end_time - self.start_time
 
 

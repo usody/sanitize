@@ -96,7 +96,7 @@ async def write_to_sector(
     :return: schemas.ErasureCommand
     """
     write_command = f"dd if={'/dev/zero' if zeros else '/dev/random'}" \
-                    f" of=/dev/sda bs={bs} count=1 seek={sector}"
+                    f" of={dev_path} bs={bs} count=1 seek={sector}"
     logger.debug(
         f"{dev_path}: Writing {'zeros' if zeros else 'random'}"
         f" data on sector {sector}.")
@@ -108,7 +108,7 @@ def get_smart_info(dev_path):
     Get SMART information for a device using smartctl.
 
     Args:
-        dev_path (str): Path to device
+        dev_path (str): Path to a device
 
     Returns:
         dict: JSON output from smartctl
@@ -118,7 +118,8 @@ def get_smart_info(dev_path):
     command = ["smartctl", "-aj", dev_path]
 
     # Run command
-    proc = subprocess.run(command, stdout=subprocess.PIPE,
+    proc = subprocess.run(command,
+                          stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE)
 
     # Parse output
@@ -131,10 +132,10 @@ def get_smart_info(dev_path):
 
 def get_lsblk_info(dev_path):
     """
-    Get device information using lsblk.
+    Get device information using `lsblk`.
 
     Args:
-        dev_path (str): Path to device
+        dev_path (str): Path to a device
 
     Returns:
         dict: Device information from lsblk
@@ -144,8 +145,11 @@ def get_lsblk_info(dev_path):
     command = ["lsblk", "-JOad", dev_path]
 
     # Run command
-    proc = subprocess.run(command, stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE)
+    proc = subprocess.run(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
 
     # Parse output
     device_info = json.loads(proc.stdout.strip()).get("blockdevices", [])[0]

@@ -38,6 +38,7 @@ class Block(BaseModel):
     state: Optional[str] = Field(default=None)
     phy_sec: Optional[int] = Field(default=None, alias='phy-sec')
 
+    subsystems: Optional[str] = Field(default=None)
     mountpoint: Optional[str] = Field(default=None)
 
     children: Optional[List["Block"]] = Field(default=None)

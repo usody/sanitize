@@ -15,16 +15,6 @@ class PatternsModes(Enum):
 
 
 def get_spaced_numbers(max_num: int, items: int):
-    """
-    ```python
-    step = (100000 - 0) / (6 - 1)
-    numbers = [i * step for i in range(6)]
-    ```
-
-    :param max_num:
-    :param items:
-    :return:
-    """
     step = (max_num - 1) / (items - 1)
     return [int(i * step) for i in range(items)]
 

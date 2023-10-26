@@ -3,6 +3,7 @@ import logging
 from pathlib import Path
 from typing import Union, Optional
 
+from config import settings
 from usody_sanitize import schemas, steps, commands, utils
 from usody_sanitize.methods import (
     BASIC,
@@ -19,7 +20,7 @@ class ErasureProcess:
             dev_path: Union[str, Path],
             method: schemas.Method,
     ):
-        self.path: Path = Path(dev_path.as_posix())
+        self.path: Path = Path(dev_path)
         logger.info(f"Selected device `{self.path}` for sanitization.")
 
         # Init disk schema.
@@ -60,8 +61,8 @@ class ErasureProcess:
         """Extract the data from the disk and process it to get the
         main values and disk type before running the erasure.
 
-        Here we will run the smartmontools and lsblk to get the device
-        info.
+        Here we will run the smartmontools and lsblk commands to get the
+        device info.
 
         :return:
         """
@@ -124,7 +125,7 @@ class ErasureProcess:
                 logger.info(f"{self.blk}: Detected as SSD.")
 
         else:
-            # Todo: Research about SSDHD types.
+            # Todo: Research about more types.
             raise Exception("Unknown method.")
 
         # Now run the method execution steps.
@@ -149,18 +150,14 @@ class ErasureProcess:
         logger.debug(f"{self.blk.path}: Erasure finished, results:"
                      f" {json.dumps(self._sanitize.dict(), indent=4)}")
 
-    async def _pre_validation(self):
+    async def _pre_validation(self) -> None:
         """Check if the disk is not mounted and if it is not a
         read-only device.
-
-        :return:
         """
-        if self.blk.phy_sec != self.smart.logical_block_size:
-            logger.warning("Information missmatch, can not continue.")
-
         bs = self.smart.logical_block_size
         max_sector = self.smart.user_capacity.bytes // bs
-        sectors = utils.get_spaced_numbers(max_sector, 10)
+        sectors = utils.get_spaced_numbers(
+            max_sector, settings.sectors_to_validate)
 
         def _successful_command(
                 _cmd: schemas.Exec,
@@ -175,43 +172,51 @@ class ErasureProcess:
                 return False
             return True
 
-        for s in sectors:
-            # First command.
-            cmd1 = await commands.read_from_sector(self.blk.path, s, bs)
-            cmd1.description = f"Read data from sector {s} to validate" \
-                               " if have been changed."
-            if not _successful_command(cmd1):
-                self._sanitize.validation.result = False
-                return
-            self._sanitize.validation.data[s] = cmd1.stdout
-            cmd1.stdout = "Private"
+        try:
+            for s in sectors:
+                # First command (READ).
+                cmd1 = await commands.read_from_sector(self.blk.path, s, bs)
+                cmd1.description = f"Read data from sector {s} to validate" \
+                                   " if have been changed."
+                if not _successful_command(cmd1):
+                    self._sanitize.validation.result = False
+                    return
+                self._sanitize.validation.data[s] = cmd1.stdout
+                cmd1.stdout = "Private"
 
-        for s in sectors:
-            # Second command.
-            cmd2 = await commands.write_to_sector(self.blk.path, s, bs)
-            cmd2.description = "Write the data to validate into the sectors"
-            if not _successful_command(cmd2):
-                self._sanitize.validation.result = False
-                return
+            for s in sectors:
+                # Second command (WRITE).
+                cmd2 = await commands.write_to_sector(self.blk.path, s, bs)
+                cmd2.description = "Write the data to" \
+                                   " validate into the sectors"
+                if not _successful_command(cmd2):
+                    self._sanitize.validation.result = False
+                    return
 
-        for s in sectors:
-            # Third command.
-            cmd3 = await commands.read_from_sector(self.blk.path, s, bs)
-            cmd3.description = "Check if new bytes has been written"
-            if not _successful_command(cmd3):
-                self._sanitize.validation.result = False
-                return
+            for s in sectors:
+                # Third command (VERIFY SECTOR BITES CHANGED).
+                cmd3 = await commands.read_from_sector(self.blk.path, s, bs)
+                cmd3.description = "Check if new bytes has been written"
+                if not _successful_command(cmd3):
+                    self._sanitize.validation.result = False
+                    return
 
-            elif self._sanitize.validation.data[s] == cmd3.stdout:
-                logger.warning(
-                    f"{self.blk.path}:"
-                    f" Validation failed: Sector {s} has not been changed")
-                self._sanitize.validation.result = False
-                return
-            # Successfully written, update the sector with the new value.
-            self._sanitize.validation.data[s] = cmd3.stdout
+                elif self._sanitize.validation.data[s] == cmd3.stdout:
+                    logger.warning(
+                        f"{self.blk.path}:"
+                        f" Validation failed: Sector {s} has not been changed")
+                    self._sanitize.validation.result = False
+                    return
 
-        self._sanitize.validation.result = True
+                # Successfully written, update the sector with the new value.
+                self._sanitize.validation.data[s] = cmd3.stdout
+
+        except Exception as ex:
+            logger.error(f"{self.blk.path}: {ex}")
+            self._sanitize.validation.result = False
+        else:
+            self._sanitize.validation.result = True
+
         logger.debug(f"{self.blk.path}: Pre validation step finished.")
 
     async def _validation(self):
@@ -250,5 +255,7 @@ class ErasureProcess:
             elif execution.tool == 'hdparm':
                 step = await steps.erase_ssd_hdparm(self.blk.path)
                 self._sanitize.steps.append(step)
+            else:
+                raise Exception(f"Unknown tool {execution.tool}.")
 
         logger.debug(f"{self.blk.path}: Erasure steps finished.")

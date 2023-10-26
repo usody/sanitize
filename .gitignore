@@ -2,3 +2,5 @@ dist/
 .idea
 __pycache__
 tmp/
+tests_output
+.pytest_cache

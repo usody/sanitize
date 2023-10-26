@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 class DefaultMethods(Enum):
     """To easily convert strings to the method pre-defined. Used
-    when calling to the sanitizing with string instead with method class.
+    when calling the sanitizing with string instead with method class.
     """
     BASIC = BASIC
     BASELINE = BASELINE
@@ -38,8 +38,8 @@ async def auto_erase_disks(
         be selected.
     :param Optional[List[str]] disks: A list of disks to be erased. If
         none, all disks detected will be erased and sanitized.
-    :param bool confirm: Print on terminal disks that are going to be deleted/wiped
-        before to proceed to confirm the erasure.
+    :param bool confirm: Print on terminal disks that are going to be
+        deleted/wiped before to proceed to confirm the erasure.
 
     :return:
     """
@@ -57,7 +57,7 @@ async def auto_erase_disks(
         # Default method when not set by args.
         method = DefaultMethods.BASIC.value
         logger.debug("Selecting default method.")
-
+ 
     logger.info(f"Using sanitize method '{method.name}'.")
 
     # Get disks to erase.
@@ -75,7 +75,7 @@ async def auto_erase_disks(
         except KeyboardInterrupt:
             sys.exit("Process interrupted by user.")
 
-    # Start the sanitize processes here.
+    # Start the sanitizing processes here.
     running_tasks = [asyncio.create_task(erase.run()) for erase in erasures]
 
     [await task for task in running_tasks]
