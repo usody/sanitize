@@ -31,6 +31,7 @@ class ErasureProcess:
                 block=commands.get_lsblk_info(self.path.as_posix()),
             )
         )
+        logger.debug(f"{self.path}: Data successful exported.")
 
         self._sanitize = schemas.Sanitize(
             device_info=self._device,
@@ -139,7 +140,7 @@ class ErasureProcess:
         if self._sanitize.method.verification_enabled:
             self._sanitize.result = self._sanitize.validation.result
         elif self._sanitize.steps:
-            # IF validation is disabled, just check the erase command.
+            # IF validation is disabled, check the erase command.
             self._sanitize.result = self._sanitize.steps[-1].success
         else:
             # If there are no steps and neither validation,
@@ -241,20 +242,25 @@ class ErasureProcess:
         """
         for execution in self._sanitize.method.overwriting_steps:
             logger.debug(f"{self.blk.path}: Running new step: {execution}")
+
             if execution.tool == 'shred':
                 step = await steps.erase_hdd_shred(
                     self.blk.path, pattern=execution.pattern)
                 self._sanitize.steps.append(step)
+
             elif execution.tool == 'badblocks':
                 step = await steps.erase_hdd_badblocks(
                     self.blk.path, pattern=execution.pattern)
                 self._sanitize.steps.append(step)
+
             elif execution.tool == 'nvme':
                 step = await steps.erase_nvme_nvmecli(self.blk.path)
                 self._sanitize.steps.append(step)
+
             elif execution.tool == 'hdparm':
                 step = await steps.erase_ssd_hdparm(self.blk.path)
                 self._sanitize.steps.append(step)
+
             else:
                 raise Exception(f"Unknown tool {execution.tool}.")
 

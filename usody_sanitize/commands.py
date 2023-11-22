@@ -105,7 +105,7 @@ async def write_to_sector(
 
 def get_smart_info(dev_path):
     """
-    Get SMART information for a device using smartctl.
+    Get SMART information for a device using `smartctl`.
 
     Args:
         dev_path (str): Path to a device
@@ -120,7 +120,8 @@ def get_smart_info(dev_path):
     # Run command
     proc = subprocess.run(command,
                           stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE)
+                          stderr=subprocess.PIPE,
+                          timeout=10)
 
     # Parse output
     smart_json = json.loads(proc.stdout.decode('utf-8').rstrip())
@@ -148,7 +149,8 @@ def get_lsblk_info(dev_path):
     proc = subprocess.run(
         command,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stderr=subprocess.PIPE,
+        timeout=10,
     )
 
     # Parse output

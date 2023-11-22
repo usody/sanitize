@@ -62,6 +62,7 @@ async def auto_erase_disks(
 
     # Get disks to erase.
     selected_disks = disks or commands.get_disks()
+    logger.debug(f"Disks: {disks}")
     erasures = [ErasureProcess(d, method) for d in selected_disks]
 
     # Confirmation before erasure.

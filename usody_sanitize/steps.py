@@ -137,7 +137,7 @@ async def erase_hdd_shred(
         step: Optional[int] = None,
 
 ) -> schemas.Step:
-    """Runs erasure step for deleting HDD using shred.
+    """Runs an erasure step for deleting HDD using shred.
 
     Shred is a command line utility for securely deleting files, it
     is the program used for the "Basic" erasure method.
@@ -167,7 +167,7 @@ async def erase_hdd_shred(
     step.end()
 
     # Write final values on the step schema.
-    step.success = all(cmd.success for cmd in step.commands)
+    step.success = cmd.return_code == 0
     step.commands.append(cmd)
 
     logger.debug(f"{dev_path}: Badblocks erasure step finished.")
@@ -179,9 +179,9 @@ async def erase_hdd_badblocks(
         pattern: str = "random",
         step: Optional[int] = None,
 ) -> schemas.Step:
-    """Runs erasure step for deleting HDD using `badblocks`.
+    """Runs an erasure step for deleting HDD using `badblocks`.
 
-    badblocks will delete the disk writting data into each sector.
+    badblocks will delete the disk writing data into each sector.
 
     :param str dev_path: Path to the device.
     :param str pattern: Pattern to apply on the erasure.
