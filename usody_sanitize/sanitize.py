@@ -1,10 +1,11 @@
 import json
 import logging
+import sys
 from pathlib import Path
 from typing import Union, Optional
 
-from config import settings
-from usody_sanitize import schemas, steps, commands, utils
+from usody_sanitize import schemas, steps, commands, utils, exceptions
+from usody_sanitize.config import settings
 from usody_sanitize.methods import (
     BASIC,
     CRYPTOGRAPHIC_ATA,  # SSD
@@ -12,6 +13,7 @@ from usody_sanitize.methods import (
 )
 
 logger = logging.getLogger(__name__)
+mounted_volumes = commands.MountedVolumes()  # Cache mounted volumes.
 
 
 class ErasureProcess:
@@ -20,18 +22,31 @@ class ErasureProcess:
             dev_path: Union[str, Path],
             method: schemas.Method,
     ):
-        self.path: Path = Path(dev_path)
-        logger.info(f"Selected device `{self.path}` for sanitization.")
+        self.error: Optional[str] = None
+        self.__path: Path = Path(dev_path)
+        logger.info(f"Selected device `{self.__path.as_posix()}` for sanitization.")
+
+        if self.__path.as_posix() in mounted_volumes:
+            self._device = None
+            self.error = "Mounted volume."
+            return
 
         # Init disk schema.
-        self._device = schemas.Device(
-            # Export data from disk.
-            export_data=schemas.ExportData(
-                smart=commands.get_smart_info(self.path.as_posix()),
-                block=commands.get_lsblk_info(self.path.as_posix()),
+        try:
+            self._device = schemas.Device(
+                # Export data from disk.
+                export_data=schemas.ExportData(
+                    smart=commands.get_smart_info(self.__path.as_posix()),
+                    block=commands.get_lsblk_info(self.__path.as_posix()),
+                )
             )
-        )
-        logger.debug(f"{self.path}: Data successful exported.")
+        except exceptions.DiskNotFoundError as e:
+            self._device = None
+            self.error = e.message
+            logger.error(self.error)
+            return
+
+        logger.debug(f"{self.__path.as_posix()}: Data successful exported.")
 
         self._sanitize = schemas.Sanitize(
             device_info=self._device,
@@ -41,11 +56,24 @@ class ErasureProcess:
         self._sanitize.method = BASIC if method is None else method
         self._extract_device_info()
 
+    @property
+    def path(self) -> Path:
+        return self.__path
+
+    @path.setter
+    def path(self, value):
+        if self.__path is not None:
+            raise ValueError("Readonly")
+        self.__path = value
+
     def __str__(self):
-        return f"[Path: {self.blk.path}]" \
-               f" [Model: {self._device.model}]" \
-               f" [Serial: {self._device.serial_number}]" \
-               f" [Size: {self._device.size}]"
+        if self._device:
+            return f"[Path: {self.path}]" \
+                   f" [Model: {self._device.model}]" \
+                   f" [Serial: {self._device.serial_number}]" \
+                   f" [Size: {self._device.size}]" \
+                   f" [Type: {self._device.storage_medium}]"
+        return f"Device {self.path}: {self.error or 'Unknown error'}."
 
     @property
     def blk(self) -> Optional[schemas.Block]:
@@ -75,27 +103,27 @@ class ErasureProcess:
         self._device.connector = self.blk.subsystems
         self._device.size = self.blk.size
 
-        # Check if the device is SSD or HDD.
-        if self.smart.rotation_rate is None:
-            # Set the value from `lsblk` instead smart when smart is None.
-            self._device.storage_medium = "HDD" if self.blk.rota else "SSD"
+        # Detect if it is flash memory.
+        with open(f"/sys/block/{self.path.name}/queue/rotational") as _fh:
+            rotation = int(_fh.read())
+        self._device.storage_medium = "HDD" if rotation else "SSD"
 
-        elif self.smart.rotation_rate == 0:  # Is SSD.
-            if self.blk.rota == 1:  # `lsblk` says is a HDD.
-                logger.debug("SSD \n\t"
-                             f"`lsblk` rotate = {self.blk.rota}\n\t"
-                             "`smartctl` rotation_rate"
-                             f" = {self.smart.rotation_rate}")
+        if self.smart.rotation_rate == 0:  # Is SSD.
+            if rotation == 1:
+                logger.warning(f"Detected as SSD but:\n\t"
+                               f" System says: {rotation}\n\t"
+                               f" `smartctl` says: {self.smart.rotation_rate} \n\t"
+                               f" `lsblk` says: {self.blk.rota}")
 
             self._device.storage_medium = "SSD"
-
-        else:
-            self._device.storage_medium = "HDD"
 
         logger.debug(f"{self.path}: Information extracted.")
 
     async def run(self):
-        logger.debug(f"{self.blk.path}: Running sanitize process.")
+        if not self._device:
+            raise exceptions.DiskNotFoundError(self.path)
+
+        logger.debug(f"{self.path}: Running sanitize process.")
 
         if self._sanitize.method.verification_enabled:
             # Pre validation steps before erasure.
@@ -105,25 +133,26 @@ class ErasureProcess:
             # noinspection PySimplifyBooleanCheck
             if not self._sanitize.validation.result:
                 logger.warning(
-                    f"{self.blk.path}: Validation failed. Stopping process.")
+                    f"{self.path}: Validation failed. Stopping process.")
                 return
 
+
         if self._sanitize.device_info.storage_medium == 'HDD':
-            logger.info(f"{self.blk}: Detected as HDD.")
+            logger.info(f"{self.path}: Detected as HDD.")
 
         elif self._sanitize.device_info.storage_medium == 'SSD':
             # Overwriting erasures damages the disk.
 
-            if self.blk.path.startswith("/dev/nvme"):
+            if self.path.name.startswith("nvme"):
                 # M.2 needs to use another command for PCIe interface.
                 # Todo: Keep the validation method before changing the method.
                 self._sanitize.method = CRYPTOGRAPHIC_NVME
-                logger.info(f"{self.blk}: Detected as NVME.")
+                logger.info(f"{self.path}: Detected as NVME.")
             else:
                 # SSD can be erased via ATA interface.
                 # Todo: Keep the validation method before changing the method.
                 self._sanitize.method = CRYPTOGRAPHIC_ATA
-                logger.info(f"{self.blk}: Detected as SSD.")
+                logger.info(f"{self.path}: Detected as SSD.")
 
         else:
             # Todo: Research about more types.
@@ -148,17 +177,26 @@ class ErasureProcess:
             self._sanitize.result = False
 
         # Show info when the erasure is done.
-        logger.debug(f"{self.blk.path}: Erasure finished, results:"
-                     f" {json.dumps(self._sanitize.dict(), indent=4)}")
+        logger.debug(f"{self.path}: Erasure finished, results:"
+                     f" {json.dumps(self._sanitize.model_dump(mode='json'), indent=4)}")
 
     async def _pre_validation(self) -> None:
         """Check if the disk is not mounted and if it is not a
         read-only device.
         """
-        bs = self.smart.logical_block_size
-        max_sector = self.smart.user_capacity.bytes // bs
+        with open(f"/sys/block/{self.path.name}/queue/physical_block_size") as _fh:
+            bs = int(_fh.read())
+        with open(f"/sys/block/{self.path.name}/size") as _fh:
+            max_bytes = int(_fh.read())
+
+        max_sector = max_bytes // bs
         sectors = utils.get_spaced_numbers(
             max_sector, settings.sectors_to_validate)
+
+        logger.debug(f"{self.path}: Total sectors to validate are {sectors}"
+                     f" from a total of {max_sector} sectors,"
+                     f" the disk has {max_bytes} bytes"
+                     f" with {bs} bytes on each sector.")
 
         def _successful_command(
                 _cmd: schemas.Exec,
@@ -168,15 +206,16 @@ class ErasureProcess:
                 _cmd.success = False
                 # Todo: Clean only the data from sectors.
                 self._sanitize.validation.data = {}
-                logger.warning(f"{self.blk.path}:"
+                logger.warning(f"{self.path}:"
                                f" Validation step {_cmd.command} failed.")
                 return False
             return True
 
+        # Read blocks to ensure the validation.
         try:
             for s in sectors:
                 # First command (READ).
-                cmd1 = await commands.read_from_sector(self.blk.path, s, bs)
+                cmd1 = await commands.read_from_sector(self.path.as_posix(), s, bs)
                 cmd1.description = f"Read data from sector {s} to validate" \
                                    " if have been changed."
                 if not _successful_command(cmd1):
@@ -187,7 +226,7 @@ class ErasureProcess:
 
             for s in sectors:
                 # Second command (WRITE).
-                cmd2 = await commands.write_to_sector(self.blk.path, s, bs)
+                cmd2 = await commands.write_to_sector(self.path.as_posix(), s, bs)
                 cmd2.description = "Write the data to" \
                                    " validate into the sectors"
                 if not _successful_command(cmd2):
@@ -196,7 +235,7 @@ class ErasureProcess:
 
             for s in sectors:
                 # Third command (VERIFY SECTOR BITES CHANGED).
-                cmd3 = await commands.read_from_sector(self.blk.path, s, bs)
+                cmd3 = await commands.read_from_sector(self.path.as_posix(), s, bs)
                 cmd3.description = "Check if new bytes has been written"
                 if not _successful_command(cmd3):
                     self._sanitize.validation.result = False
@@ -204,7 +243,7 @@ class ErasureProcess:
 
                 elif self._sanitize.validation.data[s] == cmd3.stdout:
                     logger.warning(
-                        f"{self.blk.path}:"
+                        f"{self.path}:"
                         f" Validation failed: Sector {s} has not been changed")
                     self._sanitize.validation.result = False
                     return
@@ -213,12 +252,12 @@ class ErasureProcess:
                 self._sanitize.validation.data[s] = cmd3.stdout
 
         except Exception as ex:
-            logger.error(f"{self.blk.path}: {ex}")
+            logger.error(f"{self.path}: {ex}")
             self._sanitize.validation.result = False
         else:
             self._sanitize.validation.result = True
 
-        logger.debug(f"{self.blk.path}: Pre validation step finished.")
+        logger.debug(f"{self.path}: Pre validation step finished.")
 
     async def _validation(self):
         """
@@ -226,11 +265,11 @@ class ErasureProcess:
         """
         for sector in self._sanitize.validation.data:
             cmd = await commands.read_from_sector(
-                self.blk.path, sector, self.smart.logical_block_size)
+                self.path.as_posix(), sector, self.smart.logical_block_size)
 
             if cmd.stdout == self._sanitize.validation.data[sector]:
                 self._sanitize.validation.result = False
-                logger.warning(f"{self.blk.path}: Erasure validation failed.")
+                logger.warning(f"{self.path}: Erasure validation failed.")
                 return
 
         self._sanitize.validation.result = True
@@ -241,27 +280,28 @@ class ErasureProcess:
         current method. Automatically runs them in the same order.
         """
         for execution in self._sanitize.method.overwriting_steps:
-            logger.debug(f"{self.blk.path}: Running new step: {execution}")
+            logger.debug(f"{self.path}: Running new step: {execution}")
 
             if execution.tool == 'shred':
                 step = await steps.erase_hdd_shred(
-                    self.blk.path, pattern=execution.pattern)
+                    self.path.as_posix(), pattern=execution.pattern)
+                step.step_number = 1
                 self._sanitize.steps.append(step)
 
             elif execution.tool == 'badblocks':
                 step = await steps.erase_hdd_badblocks(
-                    self.blk.path, pattern=execution.pattern)
+                    self.path.as_posix(), pattern=execution.pattern)
                 self._sanitize.steps.append(step)
 
             elif execution.tool == 'nvme':
-                step = await steps.erase_nvme_nvmecli(self.blk.path)
+                step = await steps.erase_nvme_nvmecli(self.path.as_posix())
                 self._sanitize.steps.append(step)
 
             elif execution.tool == 'hdparm':
-                step = await steps.erase_ssd_hdparm(self.blk.path)
+                step = await steps.erase_ssd_hdparm(self.path.as_posix())
                 self._sanitize.steps.append(step)
 
             else:
                 raise Exception(f"Unknown tool {execution.tool}.")
 
-        logger.debug(f"{self.blk.path}: Erasure steps finished.")
+        logger.debug(f"{self.path}: Erasure steps finished.")

@@ -30,22 +30,17 @@ class Exec(BaseModel):
                                    " correctly")
 
     start_time: float = Field(
-        default=..., description="Exact time when the command started")
+        default_factory=time.time, description="Exact time when the command started")
     end_time: Optional[float] = Field(
         default=None, description="Exact time when the command ended")
-
-    def __init__(self, *args, **kwargs):
-        if 'start_time' not in kwargs:
-            kwargs['start_time'] = time.time()
-        super().__init__(*args, **kwargs)
 
 
 class Step(BaseModel):
     """Main and base class to define a collection of steps to proceed.
     """
-    step: Optional[int] = Field(default=None, description="Step number")
-    start_time: Optional[float] = Field(
-        default=None, description="start time of the step")
+    step_number: Optional[int] = Field(default=None, description="Step number")
+    start_time: float = Field(
+        default_factory=time.time, description="start time of the step")
     end_time: Optional[float] = Field(
         default=None, description="end time of the step")
     duration: Optional[float] = Field(
@@ -55,11 +50,6 @@ class Step(BaseModel):
     success: bool = Field(
         default=False, description="Tells if the step has"
                                    " been executed correctly")
-
-    def __init__(self, *args, **kwargs):
-        if 'start_time' not in kwargs:
-            kwargs['start_time'] = time.time()
-        super().__init__(*args, **kwargs)
 
     def end(self):
         self.end_time = time.time()

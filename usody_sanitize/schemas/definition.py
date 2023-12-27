@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class Execution(BaseModel):
@@ -35,8 +35,3 @@ class Method(BaseModel):
         default=None, description="Summary of the check (no / Bad sectors)")
     overwriting_steps: List[Execution] = Field(
         default=[], description="a list of execution steps")
-
-    class Config:
-        fields = {
-            "name": {"readonly": True},
-        }

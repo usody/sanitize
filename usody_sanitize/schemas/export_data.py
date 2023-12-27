@@ -9,7 +9,7 @@ and `lsblk`.
 
 from typing import Optional, List
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class Block(BaseModel):
@@ -33,7 +33,7 @@ class Block(BaseModel):
     vendor: Optional[str] = Field(default=None)
     uuid: Optional[str] = Field(default=None)
     type: Optional[str] = Field(default=None)
-    hotplug: Optional[str] = Field(default=None)
+    hotplug: Optional[bool] = Field(default=None)
     label: Optional[str] = Field(default=None)
     state: Optional[str] = Field(default=None)
     phy_sec: Optional[int] = Field(default=None, alias='phy-sec')
@@ -43,8 +43,7 @@ class Block(BaseModel):
 
     children: Optional[List["Block"]] = Field(default=None)
 
-    class Config:
-        extra = "allow"
+    model_config = ConfigDict(extra='allow')
 
 
 class SmartCTL(BaseModel):
@@ -57,8 +56,7 @@ class SmartCTL(BaseModel):
     messages: Optional[List[dict]] = Field(default=None)
     exit_status: Optional[int] = Field(default=None)
 
-    class Config:
-        extra = "allow"
+    model_config = ConfigDict(extra='allow')
 
 
 class Device(BaseModel):
@@ -101,8 +99,8 @@ class Smart(BaseModel):
     smart_support: Optional[dict] = Field(default=None)
     smart_status: Optional[dict] = Field(default=None)
 
-    class Config:
-        extra = "allow"
+
+    model_config = ConfigDict(extra='allow', protected_namespaces=())
 
 
 class ExportData(BaseModel):
@@ -111,5 +109,4 @@ class ExportData(BaseModel):
     smart: Optional[Smart] = Field(
         default=None, description="Output of `smartctl`.")
 
-    class Config:
-        extra = "allow"
+    model_config = ConfigDict(extra='allow')
