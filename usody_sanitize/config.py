@@ -1,8 +1,8 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    sectors_to_validate = 10
+    sectors_to_validate: int = 10
 
 
 settings = Settings()

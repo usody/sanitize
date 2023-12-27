@@ -20,7 +20,7 @@ class Device(BaseModel):
     serial_number: Optional[str] = Field(default=None)
     connector: Optional[str] = Field(default=None,
                                      description="IDE/SATA/SCSI/SAS/M.2/U.2")
-    size: Optional[int] = Field(default=None, description="Disk size in bites")
+    size: Optional[str] = Field(default=None, description="Disk size in bites")
     storage_medium: Optional[str] = Field(default=None,
                                           description="HDD/SSD/SSDHD")
 

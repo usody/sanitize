@@ -6,9 +6,39 @@ import time
 from pathlib import Path
 from typing import Optional, List, Any
 
-from usody_sanitize import schemas
+from usody_sanitize import schemas, exceptions
 
 logger = logging.getLogger(__name__)
+
+
+class MountedVolumes:
+    cache_time = None
+    volumes = None
+    command = "df -h | awk 'NR>1 {print $1}' | grep -v 'tmpfs\|overlay\|udev\|/dev/loop'"
+
+    def fetch(self, timeout: int = 5) -> List[str]:
+        now = time.time()
+        if not self.cache_time or now - self.cache_time:
+            # Build command
+            # Run command
+            proc = subprocess.run(self.command,
+                                  shell=True,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  timeout=timeout)
+
+            self.volumes = proc.stdout.decode("UTF-8").strip().split("\n")
+            self.cache_time = now
+
+        return self.volumes
+
+    def __contains__(self, volume_target: str) -> bool:
+        if self.volumes is None:
+            self.fetch()
+        for volume in self.volumes:
+            if volume.startswith(volume_target):
+                return True
+        return False
 
 
 def get_disks():
@@ -105,7 +135,7 @@ async def write_to_sector(
 
 def get_smart_info(dev_path):
     """
-    Get SMART information for a device using `smartctl`.
+    Get SMART information for a device using `smartctl -aj /dev/sdexample`.
 
     Args:
         dev_path (str): Path to a device
@@ -123,6 +153,9 @@ def get_smart_info(dev_path):
                           stderr=subprocess.PIPE,
                           timeout=10)
 
+    if proc.returncode == 2:
+        raise exceptions.DiskNotFoundError(dev_path)
+
     # Parse output
     smart_json = json.loads(proc.stdout.decode('utf-8').rstrip())
 
@@ -133,7 +166,7 @@ def get_smart_info(dev_path):
 
 def get_lsblk_info(dev_path):
     """
-    Get device information using `lsblk`.
+    Get device information using `lsblk -JOad /dev/sdexample`.
 
     Args:
         dev_path (str): Path to a device
@@ -153,9 +186,8 @@ def get_lsblk_info(dev_path):
         timeout=10,
     )
 
-    # Parse output
-    device_info = json.loads(proc.stdout.strip()).get("blockdevices", [])[0]
+    if proc.returncode == 32:
+        raise exceptions.DiskNotFoundError(dev_path)
 
-    # Print and return result
-    print(f"{dev_path}: `lsblk` is -> {device_info}")
-    return device_info
+    # Parse output
+    return json.loads(proc.stdout.strip()).get("blockdevices", [])[0]

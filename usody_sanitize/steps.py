@@ -113,7 +113,7 @@ async def erase_nvme_nvmecli(
 
     # Start first command for this step.
     logger.debug(f"{dev_path}: Erasing disk.")
-    command1 = f"nvme format --ses=1 {dev_path}"
+    command1 = f"nvme format --force --ses=1 {dev_path}"
     cmd1: schemas.Exec = await commands.erasure_command(command1)
     cmd1.description = "Erase all contents from the disks with secure" \
                        "erasure enabled (--ses=1)."
