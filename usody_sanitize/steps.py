@@ -1,28 +1,39 @@
-import time
+"""
+Steps
+=====
+
+Here you will
+
+"""
+
 import logging
+from typing import Optional
 
 from usody_sanitize import schemas, commands, utils
 
 logger = logging.getLogger(__name__)
 
 
-async def erase_ssd_hdparm(dev_path: str) -> schemas.ErasureStep:
+async def erase_ssd_hdparm(
+        dev_path: str,
+        step: Optional[int] = None,
+) -> schemas.Step:
     """
-    Generates a erasure step for deleting SSD using hdparm.
+    Generates erasure step for deleting SSD using hdparm via ATA.
 
     :param str dev_path: Path to the device.
-    :return: schemas.ErasureStep
+    :param Optional[str] step: Path to the device.
+    :return: schemas.Step
 
     Example:
     >>> erase_ssd_hdparm("/dev/sda")
     """
-    step = schemas.ErasureStep(device=dev_path, step=1)
-    step.date_init = time.time()
+    step = schemas.Step(device=dev_path, step=step)
 
     # Start first command for this step.
     logger.debug(f"{dev_path}: Start command 1.")
     command1 = f"hdparm -I {dev_path}"
-    cmd1: schemas.ErasureCommand = await commands \
+    cmd1: schemas.Exec = await commands \
         .erasure_command(command1)
     cmd1.description = "Verify that the SSD disc is not frozen."
 
@@ -47,7 +58,6 @@ async def erase_ssd_hdparm(dev_path: str) -> schemas.ErasureStep:
     step.commands.append(cmd2)
     logger.debug(f"{dev_path}: Command 2 finished. \n{cmd2}")
     if cmd2.success is False:
-        logger.warning("")
         return step
 
     # Third command.
@@ -67,93 +77,145 @@ async def erase_ssd_hdparm(dev_path: str) -> schemas.ErasureStep:
     command4 = f"hdparm -I {dev_path}"
     cmd4 = await commands.erasure_command(command4)
     cmd4.description = "Check the drive security is set to disabled"
-    # There is no problem if the drive is locked. A validation
-    # process of the data been erased is more important.
+
+    # Todo: Enable this pre-validation.
     # if utils.find_text(" *(not *enabled) *", cmd4.output):
     #     cmd4.success = True
     # else:
     #     cmd4.success = False
 
-    # @TODO: Validation step at the end.
-
     step.commands.append(cmd4)
     logger.debug(f"{dev_path}: Command 4 finished. {cmd4}")
 
     # Write final values on the step schema.
-    step.date_end = time.time()
-    step.duration = step.date_end - step.date_init
+    step.end()
     step.success = all(cmd.success for cmd in step.commands)
 
     logger.debug(f"{dev_path}: hdparm erasure step finished.")
     return step
 
 
-async def erase_hdd_shred(dev_path: str) -> schemas.ErasureStep:
-    """Runs erasure step for deleting HDD using shred.
+async def erase_nvme_nvmecli(
+        dev_path: str,
+        step: Optional[int] = None,
+) -> schemas.Step:
+    """Creates the erasure step schema with the delete nvme step. This
+    steps executes 1 command `nvme` from `nvme-cli` package.
+
+    :param str dev_path: Path to the device.
+    :param int step: Set the step number.
+    :return: schemas.Step
+
+    Example:
+    >>> erase_ssd_hdparm("/dev/sda")
+    """
+    step = schemas.Step(device=dev_path, step=step)
+
+    # Start first command for this step.
+    logger.debug(f"{dev_path}: Erasing disk.")
+    command1 = f"nvme format --ses=1 {dev_path}"
+    cmd1: schemas.Exec = await commands.erasure_command(command1)
+    cmd1.description = "Erase all contents from the disks with secure" \
+                       "erasure enabled (--ses=1)."
+    step.end()
+
+    logger.debug(f"{dev_path}: Command 1 finished. \n{cmd1}")
+    if cmd1.success is False:
+        return step
+
+    # Write final values on the step schema.
+    step.success = all(cmd.success for cmd in step.commands)
+    step.commands.append(cmd1)
+
+    logger.debug(f"{dev_path}: hdparm erasure step finished.")
+    return step
+
+
+async def erase_hdd_shred(
+        dev_path: str,
+        pattern: str = "random",
+        step: Optional[int] = None,
+
+) -> schemas.Step:
+    """Runs an erasure step for deleting HDD using shred.
 
     Shred is a command line utility for securely deleting files, it
     is the program used for the "Basic" erasure method.
 
     :param str dev_path: Path to the device.
-    :return: schemas.ErasureStep
+    :param str pattern: Pattern to apply on the erasure.
+    :param int step: Step number to be set on the step schema.
+    :return: schemas.Step
 
     Example:
     >>> erase_hdd_shred("/dev/sda")
     """
-    step = schemas.ErasureStep(device=dev_path, step=1)
-    step.date_init = time.time()
+    step = schemas.Step(device=dev_path, step=step)
 
     # Define the command to run, with zeros or random.
-    command = f"shred --force --verbose --zero --iterations=0 {dev_path}"
+    if pattern == "zeros":
+        command = f"shred --force --verbose --zero --iterations=0 {dev_path}"
+    else:
+        command = f"shred --force --verbose --iterations=1 {dev_path}"
+
     logger.debug(f"{dev_path} command: {command}")
 
     # Run the command.
-    cmd: schemas.ErasureCommand = await commands.erasure_command(
+    cmd: schemas.Exec = await commands.erasure_command(
         command=command, process_manager=utils.print_shred_progress)
     cmd.description = "Write zeros to the disk with `shred`."
+    step.end()
 
     # Write final values on the step schema.
+    step.success = cmd.return_code == 0
     step.commands.append(cmd)
-    step.date_end = time.time()
-    step.duration = step.date_end - step.date_init
-    step.success = all(cmd.success for cmd in step.commands)
 
     logger.debug(f"{dev_path}: Badblocks erasure step finished.")
     return step
 
 
-async def erase_hdd_badblocks(dev_path: str) -> schemas.ErasureStep:
-    """Runs erasure step for deleting HDD using `badblocks`.
+async def erase_hdd_badblocks(
+        dev_path: str,
+        pattern: str = "random",
+        step: Optional[int] = None,
+) -> schemas.Step:
+    """Runs an erasure step for deleting HDD using `badblocks`.
 
-    badblocks will delete the disk writting data into each sector.
+    badblocks will delete the disk writing data into each sector.
 
     :param str dev_path: Path to the device.
+    :param str pattern: Pattern to apply on the erasure.
+    :param int step: Step number to be set on the step schema.
     :return: schemas.ErasureStep
 
     Example:
     >>> erase_hdd_badblocks("/dev/sda")
     """
-    step = schemas.ErasureStep(device=dev_path, step=1)
-    step.date_init = time.time()
+    step = schemas.Step(device=dev_path, step=step)
 
-    # Todo: Add -e argument to add a maximum of badblocks found.
+    # Todo: Add -e argument to add a maximum of `badblocks` found.
     # Define the command to run, with zeros or random.
     # Argument `-s` provides a progress info that cannot be received,
     #  causing a exception as no new lines are emitted.
-    command = f"badblocks -wv -p 1 -t random {dev_path}"
+
+    if pattern == "zeros":
+        command = f"badblocks -wv -p 1 -t 0 {dev_path}"
+    elif pattern == "random":
+        command = f"badblocks -wv -p 1 -t random {dev_path}"
+    else:
+        command = f"badblocks -wv -p 1 -t {pattern} {dev_path}"
+
     logger.debug(f"{dev_path} command: {command}")
 
     # Run the command.
-    cmd: schemas.ErasureCommand = await commands.erasure_command(
+    cmd: schemas.Exec = await commands.erasure_command(
         command=command, process_manager=utils.print_badblocks_progress)
     cmd.description = "Write random data into the disk with `badblocks`."
+    step.end()
 
     # Write final values on the step schema.
-    step.commands.append(cmd)
-    step.date_end = time.time()
-    step.duration = step.date_end - step.date_init
     step.success = all(cmd.success for cmd in step.commands)
+    step.commands.append(cmd)
 
     logger.debug(f"{dev_path}: Command badblocks erasure step finished.")
     return step
-

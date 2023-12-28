@@ -1,4 +1,14 @@
+"""
+Export Data Schema
+==================
+
+This module manages the data expected to be returned from the commands
+executed to export the device data, those commands are `smartmontools`
+and `lsblk`.
+"""
+
 from typing import Optional, List
+
 from pydantic import BaseModel, Field
 
 
@@ -26,7 +36,9 @@ class Block(BaseModel):
     hotplug: Optional[str] = Field(default=None)
     label: Optional[str] = Field(default=None)
     state: Optional[str] = Field(default=None)
+    phy_sec: Optional[int] = Field(default=None, alias='phy-sec')
 
+    subsystems: Optional[str] = Field(default=None)
     mountpoint: Optional[str] = Field(default=None)
 
     children: Optional[List["Block"]] = Field(default=None)

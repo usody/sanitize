@@ -1,0 +1,1367 @@
+{
+  "steps": [
+    {
+      "step": null,
+      "start_time": 1689976139.0143216,
+      "end_time": 1689987789.5483162,
+      "duration": 11650.533994674683,
+      "commands": [
+        {
+          "description": "Write zeros to the disk with `shred`.",
+          "command": "shred --force --verbose --iterations=1 /dev/sda",
+          "stdout": "",
+          "stderr": "",
+          "return_code": 0,
+          "success": true,
+          "start_time": 1689976139.0155861,
+          "end_time": 1689987789.5476472
+        }
+      ],
+      "success": true
+    }
+  ],
+  "validation": {
+    "result": true,
+    "commands": [
+      {
+        "description": "Read data from sector 0 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=0 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0205159 s, 25.0 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.8275893,
+        "end_time": 1689976137.8664238
+      },
+      {
+        "description": "Read data from sector 69460271 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=69460271 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.00983752 s, 52.0 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.868119,
+        "end_time": 1689976137.9000475
+      },
+      {
+        "description": "Read data from sector 138920543 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=138920543 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.00986302 s, 51.9 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.904265,
+        "end_time": 1689976137.935008
+      },
+      {
+        "description": "Read data from sector 208380815 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=208380815 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0181793 s, 28.2 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.938638,
+        "end_time": 1689976137.971673
+      },
+      {
+        "description": "Read data from sector 277841087 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=277841087 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0201068 s, 25.5 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976137.9743834,
+        "end_time": 1689976138.007968
+      },
+      {
+        "description": "Read data from sector 347301359 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=347301359 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0170568 s, 30.0 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.0094075,
+        "end_time": 1689976138.0412312
+      },
+      {
+        "description": "Read data from sector 416761631 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=416761631 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0180536 s, 28.4 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.0437791,
+        "end_time": 1689976138.0761063
+      },
+      {
+        "description": "Read data from sector 486221903 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=486221903 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0115676 s, 44.3 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.0784895,
+        "end_time": 1689976138.1101494
+      },
+      {
+        "description": "Read data from sector 555682175 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=555682175 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0108089 s, 47.4 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.1133425,
+        "end_time": 1689976138.1446187
+      },
+      {
+        "description": "Read data from sector 625142447 to validate if have been changed.",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=625142447 | xxd -ps",
+        "stdout": "Private",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0212378 s, 24.1 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.147851,
+        "end_time": 1689976138.1829715
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=0",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0306269 s, 16.7 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.1843326,
+        "end_time": 1689976138.2306798
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=69460271",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.015136 s, 33.8 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.2320337,
+        "end_time": 1689976138.2630093
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=138920543",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0350828 s, 14.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.2683308,
+        "end_time": 1689976138.3296223
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=208380815",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0154009 s, 33.2 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.3310258,
+        "end_time": 1689976138.361575
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=277841087",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0173053 s, 29.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.3764083,
+        "end_time": 1689976138.425395
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=347301359",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.00725788 s, 70.5 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.428954,
+        "end_time": 1689976138.454895
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=416761631",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0113081 s, 45.3 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.4716005,
+        "end_time": 1689976138.5128517
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=486221903",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0188956 s, 27.1 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.5146277,
+        "end_time": 1689976138.5503612
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=555682175",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0377804 s, 13.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.551648,
+        "end_time": 1689976138.6204658
+      },
+      {
+        "description": "Write the data to validate into the sectors",
+        "command": "dd if=/dev/random of=/dev/sda bs=512 count=1 seek=625142447",
+        "stdout": "",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.00013935 s, 3.7 MB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.622692,
+        "end_time": 1689976138.6435957
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=0 | xxd -ps",
+        "stdout": "e29a77aba6d0b76c3cf5e86fd0f1c06bb18e97dbf630b4acf556c1b276a4\n54d8696583580deb42f5c708eca5b102353a97f26fc0be19f7b387d655d9\nc3304d7d01e5c8fe21c55358f9eaa8023d31a09e28d1493bcab549f4fbc3\nc17a55d67e086d8723b63956d633e78442ad66995f34878cfbfe562e4204\n12e5556dfb3cdeb9acd270ecac38ff07da15b531ca1759425bdd615827c6\nbf2213a0fe40aa54c67b5bb29f99bf050e46ca4fa380f562464f9ba33ab2\n39c39758f42ce6dc782a4061351b1d391b7ffeed08747cea1d56089a2d13\nde6a0f7dadf2d81b6f753ba183bbf2ed1564eb5cd80dab364a56343dadc2\nc9c782ecc212c3ef4b4c96669587c88cc10d53cfb0c53215912aae7c8b12\n8aea2347b01d5c64957b07e58cdedc8cb0ca6e19d0ca02b373a611803275\n00d15ff85f8ad3bd812a366882b6fe75ea76b4717a0016c94376cbac4d85\nbff0980276156fb3314dbb499eb1e50c2855d106bcc15e936247262ce902\n27dd793c7ac7e6cd2cd4e233edcdd35a91e93c09abc821e757dac1f1bde4\n0085f40303f4a1ffda090d59af07da6effc35c6becfdaf194ca24c36dede\n66022692a8ab25e32e13b252e5a09541c398d4da317503b7b10b1e70e444\n5ad66562e1a60e62033b8a6fd93e41a6f9711ce2d9f3fb70a8a1cf8486d0\n32a4af3a8bd67664a21862b0b86763ea7db535d805d9c106669cdc4e4fb6\n9796",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000113442 s, 4.5 MB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.661677,
+        "end_time": 1689976138.680258
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=69460271 | xxd -ps",
+        "stdout": "3fe033bc0e1eaf2e0f7e30dc82ed894e00db04e09b653ce010c38c90e94e\nfc5a28564cd74227cbe0c398ca3c3185cd58d8437d63b0dd294f1c876404\n6d8db6351acfdfea18a59ef49ee9a7d39c9a167ab2141fd8e4e0a828e9e0\n6e95eb03c0d5a40d1ab1ba414d857bb066e97e09f4ad14182e72cee3f741\n71cc98f1c0d70f2d19b4869ef2d5a98e841e27e2bb465aabf60fd1d657ff\ncfe161ee5f6b30f8753ad962f4fb3def0455dadeaa5b3ca99aa6eeba87dc\nf3aad1f4212c7e0763c6107a79531c7ff5d2e1f182f4fe337a422d1e55ff\n325c74d2b575a042623e00df3e9f8bedcdfb85bfec7d6af0ae110c381e6e\ncf70d0222e2f1a03616084b68f7d72080d61697e7ce6b95a69090ea41d74\ndba05767a69db1c0e23c9171959e341366d706515fd9a6886ddc3509bec8\n6b654604a7e669eae57dac8c23ad89819581c47aed74aa018254b0e995f0\nfcb58fa0d2c1971f9e3eebce46d3f72e5f2c2de1c8669e15d7ddf51e10f1\nf22a7b512ec69ace6ccbdede7ba8549220d4de4c904c47eb11b979a3f3ad\nd6a49a7a1ffffe3eeb8c6fb2b04a555d93c8e34214465298dc268a3e644e\ne462d7d0f71cdb166e718b8a65794b94b7ac67cb94f692c1a7b7cba0690c\nf4ef001b2bd487c5e672e12413eeee5b591c06dc347420d75909926e1b4d\n0b9b7271d03c62943215c4faecaf9789347c9ed44a451c946ddcb8165668\n3432",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000127498 s, 4.0 MB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.6832092,
+        "end_time": 1689976138.712864
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=138920543 | xxd -ps",
+        "stdout": "6ab6aebe63a275101a68713f8a2b2ffa19d950b5bf9a0d6e72c81b54746b\n40c94d7c4293df2d1387c3e820a10e860cdcdab5e2b73badeab59a412292\n623968edb9463c5ea185917ca779e847911089f2fdfa3692df2841c83d60\n5334caa471c198146aeefab1d9b00b0f5f37d86e5d737aac881c4d66ac87\ne880df4f8c40ef2ad72ef59580df16fc5636569e9a90700077475511ee27\nea9e1bcf009cfd76888c3dc79801d6cee9dc801ff496d92f67fa3b76e81e\nd32173c9970ad6171fffc8e3b03a4bd20f0126c475e23e8844f9f5d04f1b\n7b6ff2027f7b98e1cc6dbdf9837945e4ed84ea89a9963db2643de9b21b5d\nfd9c4f5284bcee7123e3e2edf38208e769ba41c9a3855a9bb28501dd6c83\n3725001a3ecafc12a2fab249b6586ff8d71b83e9e20a81c2053861aa7628\n4f967f2e44ecb176e930533a73583f17c91ecb9a5012c4d5f7a76a6ba962\na73aa37f0afae9464e525ea918e416d54960c3bda2d4c9e680a157fd4842\n3f3e3529fe29ddc74461b33915e8b85163f89527f1bce75ceb65cb4e2b78\n3d8d8c7ba35415b59e3caafe32f88c50a743973454536c9069f34027d72c\nb5bcbe173376abe04659a96c01bb77e26794a5c11f0615bece12c2dd763b\n46760ea58e2eaef2e9f375a37ff7c893d56e4cff683001e6b71113092343\na27682b4618aab8cc66fbf1f75baf8234b80cb5f5a2660ea1512401834ec\n77c5",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000121609 s, 4.2 MB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.7156162,
+        "end_time": 1689976138.730833
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=208380815 | xxd -ps",
+        "stdout": "418e86e1cfaf5171f7924210332316787fb52b593c5e18227d6730f7d266\nfb87cb439fa5e26153b713722b0558f05888e5865f6fb1d157562d8e9512\n6ec7b6f1b5cb944344e21cdeaf9d70a24eb71a247ba217c3b7c1f9d4fd90\nebf7adc7c1daeeada8fac307b08fb2a377d7cc0b2357ab15e0c3f2b67454\na6ba345b478d6abc826ece72dac1ec45a1852a1479d14db5da78f364c1ef\nc8f80cc1d5e95f160ec2d78f2fbed4e6a9a7f43db809b3c762908fd185d9\n603c904e0cae2d8077e236f3fa3c710a96bd462279dfce7d686a8f6fa92a\nb5e73360ebd07beaba9a0c0bef6d7402ae585fd430fcc7556929b1f412e7\n1aceac28dfbb37789a467eaae9fbbab8c99f7fcec1b1aa882b15cda373ad\n2f6a949fb5a3bfdcd63ba6a01546f24cf1f6535591ab6093fed5d39ed386\n3cca8f508e9652ee25fbfcac483811aeff14c7afc9b9fbc891943dcbd7fc\n7233a5dbe347188148525d20e548eed5f1356d8e807940d89509c93a41a8\n5efb249fd1d561d8f9fa9e2f447ffc32c241ca687cfe29e493efae382499\n1681299210e6f89114843d887cc8e879a5546d8a22a3bfa073cf96f709f6\n14d979d04974adf75d92a7a364440fa1707b582c70bf25851e24c94e4e6e\naa2d35522f4e944cce198ca7c85c4b5412c8ff530bdb8bd66731eda9c4b7\n84fb7e52865ad01f29f753d111a07250523e74fcb364ef165f853396356d\n8a86",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.0775824 s, 6.6 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.7339704,
+        "end_time": 1689976138.827042
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=277841087 | xxd -ps",
+        "stdout": "7bdbd67a78a985638ae633f77722ffecdeef50d72c5a55222b8a34496310\n68b10d6bd0cbd29766bddff48649bb73be670570121fe938fe1d20b5aa7c\n4c08f1dbd4dfae7ecd48a2d346d8f74d7da8899416044d1f1509636ce06a\nb043c2ad2fd255d6635787da02895c46f063b97a3bbb45bfa3abc5088fce\nba126eea14c0b1c6a70f0b39a19f16f47e809a4870b4bc90ed8b9888175f\n2a84d4d2ec3100e4b304b60ec5f0ecff84248d0273ae297b11bc41e12c9b\n519b37483f9d536981d0bfff046c2e9741422eed5b01502dd5269e49180a\nd4a7ea5bd5f3fcfb1679469d3a438f7b2fe8d4943590965554aeb06e1635\n60bbb342670c2f6f05f7a2b6d493c68a9f4d11c0fa226be90701be028ef7\n2adf1a7e3e85c9504f112f137e4f1ecc2a3d7e3ed3be72ad6c09d0b364ae\n246b7dc0a2b258c32a4189528e06d8ff7192316b4aba1a71b28938c906f5\ne44f5a0b1f280ed0c073162a75676e6f1eb08becb41cc1f92df4d7ca4fbe\n86bfe4a3fb2833989bec1f85158e6d42e1d6f218b8967d66cd5494b2f568\n3697c827a3a42efb2d25d51b90ec9fe141d90e27e7def43feb706518e1b0\n2f868322b060d3c262defd2182d1c4a107dcb5c578403dec082223842c6d\nf6280bec4fed7b82d53c5a4fa156d2cc90b156a13fad09fe536bfb3085d0\n03062a5620a39bb5e9461f5ed5bc7f2cde48c2e2c8de26e14c2005de28ae\n28e5",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.00690258 s, 74.2 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.8291335,
+        "end_time": 1689976138.852444
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=347301359 | xxd -ps",
+        "stdout": "5288e0d05f9a3468abf03faca6717e096a87162be990dd868997fd5919fa\n419e0f85bfa3b377e583c7d40a3cb0f484184850a6d5570038a40f86cdbe\n6aa06384381a6d70322f07fb5907db558f20fbf88fa701bcc88edc193631\n3280be2cc3b3b45648c51316d8d77fe50de2c6593232769aa36b91d78b9a\n31af31b0e3ffc65133b17053ffb4213cc1a5339258f77d1779654fe8de11\ncc728586b6902950f381c9fe6a02c441e67f614efb13cc0806e467879ff2\n29cb0a6e6e21103f387aa6e1c610751edac8fcd7322959775abb69904d82\n56a0b7e1e5491fef690407e87df3250509e40f82301b087ed19e9c8f215c\nd61c7a0dc9221710187f50f3f13722e6b3b4e9298bdc9347653e8e11de2a\n2f918cd44c0cb7041f69e3f7293efbc7c53e663e8e1a5037fabcc6df4bdb\n2f366d359054a54d5980e70f00c06a44a38bbcfae024defe4c857845e592\n5ba0d8651742e3960e520e0e6d355603f324cbcdc0e669bff24832a010f7\n64f6f24636c1773ad7acfe1d3bbf7c4bfb8d8cff81a33123c527d1003c27\nc6a594741f499bee709013339190677d7cdfd2cd642a904ffc0f07586fd3\nb067f411160066aa53881de72ac819077c0dd3ed6e631ed2d31a61ba6aef\n5e0544d8002c5a9a63b2c7303abcb2bedd37c34300d0830296ed371ffffc\n870b367b5eb82c562e26a5ded4f6dc92778072f05f89ca571bab69399b4e\nfec4",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000788281 s, 650 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.8543653,
+        "end_time": 1689976138.875306
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=416761631 | xxd -ps",
+        "stdout": "d9e18321a444c41dce7040dc3609b6b40794b590e4091ce0e9b6ae73f060\n3a876ea1971aac57462ca00dc45633219c77bc6be91a6c78d95383502006\nb51e25bc202daa616898a70aa424ece41e59873a4aabf131424062213449\n125a1529a2c52b4910429293b6fd9ec21c6890a88041a4a52cd5fc98763f\n7fb6cf69df5734c2485fdd7b7610e778a709a9b61821a366ec823eef57a5\n3bbc6a9c8e2903c26902f321d8a7a6546e6defd0cfd2bd252c61fa276cfb\ne1c61163263263a18ba9363c51a036a79d6035c27468504e0a200e8460d5\n106e08fbe252a28e48243da21b71645da7f7fca77d7fe05035c5156a8901\na81b2300aef4f78faac32a14863363bff4571ac8db130b43dc0907f4d4a4\ndd7579beb5c1de426ec4b3b1f21d1075f2daf64fd43c9cf0167cfa8fcbb8\nf8b810a8d5d860d90f0cf1062ea47c536dae4df5b65f110be72af9ebc5ec\n5aa5fdcf1979592715f1fca682317a841a270141ba505201699b019e967a\nf2fb1f7896a190df2548e6998dc9c509809839638bc1dbd18f66cc60e5ee\n726cfea4cc93cd4a4ad725fc93fd6e2b19f0d984284d1418062ea33fd76e\na101e77966dd66380387298274b96a6d696cf18bd82f37c7f5e8c77a9d96\nd6884de19ac1163a0345cde63a116a9f54150c7bda6d343cd6a44c22db66\n85af1016657f2a99896a915a3a8dab02ba97731e45c6de1b40e44a23dc6b\n7f4f",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.023326 s, 21.9 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.8796606,
+        "end_time": 1689976138.9200678
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=486221903 | xxd -ps",
+        "stdout": "36f932cfbfa6023139d3ac29f15d90b1e098108bdcaa078adf9c80a06a7f\n3c353f7b9b8eb115d13e98f73cb2221b5d5ee80502e86bec69e675d1d273\na869a51f2e5fe801ef136cdc90bc98513692c5d0539d72c9183fe0bb3a2c\n389ed32b29e5d33ef2ba2e2633170e49d38ce6550de66abc97860be247d3\n5926f8cd1e2f387b409a32f1b78311d5fa1a539a1667ce6e88bd50b98d6d\n55537b43591bc20593b5b94eaa66e3e721924cb4162a38d2c4f3790bf07c\n0a44013525bc69cc42d006ed9f276d0fdb2e46ff4b61a94ca48bf713f2fb\n1203f01254f0bbec89876740a23ab057121e33389dbea66c61c5e02f3335\n46d5676ee7d644ce5ae5a15c2e63bf176ca232010bc2eafd61cb6f3d1720\n2602387f229029e59fbe8c8e1c53ae38ffa8679e39a04c03f384bd305479\n1d7c3cf56c497a64a3d5eeadac1dbae8fdbc77aefe3ce5f452798fdd83cb\n09135a4e28767380339159b41fb672ec7683ec42f7dbbe11726ccab3f47b\nf05971ec16f2812ad6c3502adb6dce8cbfe37ac11bd3d78bf4a977e5b692\n2485cf9d51583348249ca284f1ce09df5a1117c8657e8ff98d7ad96d3f55\nb4335b861c76e9059903920535f1256d95c80c4e2a4a1cc156a3f9efd37f\n37032d987012e521afcf1c40612ced0ae768b4ddb55317ea6767fb4fb2c5\n876a0093e507939fa7b40c407f22bf6a01f07253900a7b3956e1c69afe57\nddbd",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000726782 s, 704 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.9216337,
+        "end_time": 1689976138.941885
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=555682175 | xxd -ps",
+        "stdout": "b5f5f58c9430de1196ed26d3228959e4c55d0d7f7e062386af31a114787b\n9c6e40e3920e0cd74d5033ff6b2d02d6bdc49c907ec76be94f53121f55b7\nb75cf4b397eff670b0170a106c8e7c1dc4cc9122a66a695f64b19a027e27\ndefaedd5a62d4f3994940c6cc81d696b61c877b38de4728be664f5b2c195\n6d7e6d733b6897991b06d420988a3de001747a7a76370421fc32e2db5f19\nd1f3f4aeb6dfc986f0be56fdb891397789f2de3a5476782c3cf97ddcfe29\n9c73fff49c58156220dea96b5389007b6dd91f88be4d57416a9d816d80f9\n826c9fac145fe8de78b2f12f294a3b4cc9de50cc14666e49ba85390fe8e7\n8ba877542aefb9d96ad5a52c9859efe40500f00e7f4b47933b7759c4d14c\nc0dde978fe0fd7a72de84ced105d887d0cc0cab9af3ce05f04bd70d6397d\n0f04f9482efd0125fa1a1e91ad87b4e5372fd14181fb80f342a0cf8629bc\n6b8720a0dde95805d0158b48bf80f398b01fd2e320a946928d6fff32d7eb\n67935ecf8cf9bbf9d3864cc3fb729793858d30df368195d65ed1640bd6ca\n173737106c72be1e032b55ab537454c450ff44376caf241868eb258e55ff\na06124612db952f8142207b635df7ca1bd94bb8f7b2b8a64365ebdf034b5\n07dd05cf586352e9c68037f91ef89dae144926a06385b5b2968811e1f54b\n2aa83d498a5d63e4e912ef7e393ab1c6c46a33fb7c5729e959723073260a\na614",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000756486 s, 677 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.9455943,
+        "end_time": 1689976138.9664001
+      },
+      {
+        "description": "Check if new bytes has been written",
+        "command": "dd if=/dev/sda bs=512 count=1 skip=625142447 | xxd -ps",
+        "stdout": "132ce154e20275e7b8e507a019d65531abb48400d3253fb326a5bfbd8083\n13a411feb49193199d2716826e89b01945c2fa2ba07138ec5f857982cfa6\n3c66d4f139b1bd9980f6ab9c780f85975e7e4922744145a637c63bb770a8\n100a64f7b67a30862dee87a04f3a8c425dfdfb7dd5e1101bc2cdc933eeef\na5dd9d839b2fb81fbfad86ceac971e6df57756567c7de9eb4c4e61144d01\n9965a5ce740749e1577f79fbeff386c1dfcba9f57164e5282fc8f70aae3a\ndd1831bf47f3264e42983131fc5e201ecfa689b3e37c51456924764b097e\n49ce7379019316b36db39a0d0ffefe20f7e5dcb15dec193532d74738f6fd\neecf91b277eeb2d7541f2174ca986223bec5028ef46a7f76928cff2f9ad6\n6b61d7baef9c66147b171dfab27aadd09124f5325fede470f092f880d2ff\n9d52cc9d7dda827eae3948f0cc0b06ed9284ab76e33798a6d5e2929d8ff1\n1f8031633e45397b897ecad347767c0e10c42ca4bf3a0d27f6f58375efa3\ne862598df7e585aebcaafaec5ac92220d4c3fa7fab113be07f30a3c81041\nc7a5019155b17a7f7d43abd447ed3e7723126429634b993545f462864b6c\n383ff98d7c71ed3754b029f5fd076dd166d3e7625ff39e63863152f1854f\n731f928b765fbe5f50307effec08da230897e70a1a8aaab4307b53de6569\n79358419adf99fc73047eb813d581db7ac60407d4c77c1e3c3d9669bf343\nec22",
+        "stderr": "1+0 records in\n1+0 records out\n512 bytes copied, 0.000690598 s, 741 kB/s",
+        "return_code": 0,
+        "success": true,
+        "start_time": 1689976138.9705708,
+        "end_time": 1689976138.990364
+      }
+    ],
+    "data": {
+      "0": "e29a77aba6d0b76c3cf5e86fd0f1c06bb18e97dbf630b4acf556c1b276a4\n54d8696583580deb42f5c708eca5b102353a97f26fc0be19f7b387d655d9\nc3304d7d01e5c8fe21c55358f9eaa8023d31a09e28d1493bcab549f4fbc3\nc17a55d67e086d8723b63956d633e78442ad66995f34878cfbfe562e4204\n12e5556dfb3cdeb9acd270ecac38ff07da15b531ca1759425bdd615827c6\nbf2213a0fe40aa54c67b5bb29f99bf050e46ca4fa380f562464f9ba33ab2\n39c39758f42ce6dc782a4061351b1d391b7ffeed08747cea1d56089a2d13\nde6a0f7dadf2d81b6f753ba183bbf2ed1564eb5cd80dab364a56343dadc2\nc9c782ecc212c3ef4b4c96669587c88cc10d53cfb0c53215912aae7c8b12\n8aea2347b01d5c64957b07e58cdedc8cb0ca6e19d0ca02b373a611803275\n00d15ff85f8ad3bd812a366882b6fe75ea76b4717a0016c94376cbac4d85\nbff0980276156fb3314dbb499eb1e50c2855d106bcc15e936247262ce902\n27dd793c7ac7e6cd2cd4e233edcdd35a91e93c09abc821e757dac1f1bde4\n0085f40303f4a1ffda090d59af07da6effc35c6becfdaf194ca24c36dede\n66022692a8ab25e32e13b252e5a09541c398d4da317503b7b10b1e70e444\n5ad66562e1a60e62033b8a6fd93e41a6f9711ce2d9f3fb70a8a1cf8486d0\n32a4af3a8bd67664a21862b0b86763ea7db535d805d9c106669cdc4e4fb6\n9796",
+      "69460271": "3fe033bc0e1eaf2e0f7e30dc82ed894e00db04e09b653ce010c38c90e94e\nfc5a28564cd74227cbe0c398ca3c3185cd58d8437d63b0dd294f1c876404\n6d8db6351acfdfea18a59ef49ee9a7d39c9a167ab2141fd8e4e0a828e9e0\n6e95eb03c0d5a40d1ab1ba414d857bb066e97e09f4ad14182e72cee3f741\n71cc98f1c0d70f2d19b4869ef2d5a98e841e27e2bb465aabf60fd1d657ff\ncfe161ee5f6b30f8753ad962f4fb3def0455dadeaa5b3ca99aa6eeba87dc\nf3aad1f4212c7e0763c6107a79531c7ff5d2e1f182f4fe337a422d1e55ff\n325c74d2b575a042623e00df3e9f8bedcdfb85bfec7d6af0ae110c381e6e\ncf70d0222e2f1a03616084b68f7d72080d61697e7ce6b95a69090ea41d74\ndba05767a69db1c0e23c9171959e341366d706515fd9a6886ddc3509bec8\n6b654604a7e669eae57dac8c23ad89819581c47aed74aa018254b0e995f0\nfcb58fa0d2c1971f9e3eebce46d3f72e5f2c2de1c8669e15d7ddf51e10f1\nf22a7b512ec69ace6ccbdede7ba8549220d4de4c904c47eb11b979a3f3ad\nd6a49a7a1ffffe3eeb8c6fb2b04a555d93c8e34214465298dc268a3e644e\ne462d7d0f71cdb166e718b8a65794b94b7ac67cb94f692c1a7b7cba0690c\nf4ef001b2bd487c5e672e12413eeee5b591c06dc347420d75909926e1b4d\n0b9b7271d03c62943215c4faecaf9789347c9ed44a451c946ddcb8165668\n3432",
+      "138920543": "6ab6aebe63a275101a68713f8a2b2ffa19d950b5bf9a0d6e72c81b54746b\n40c94d7c4293df2d1387c3e820a10e860cdcdab5e2b73badeab59a412292\n623968edb9463c5ea185917ca779e847911089f2fdfa3692df2841c83d60\n5334caa471c198146aeefab1d9b00b0f5f37d86e5d737aac881c4d66ac87\ne880df4f8c40ef2ad72ef59580df16fc5636569e9a90700077475511ee27\nea9e1bcf009cfd76888c3dc79801d6cee9dc801ff496d92f67fa3b76e81e\nd32173c9970ad6171fffc8e3b03a4bd20f0126c475e23e8844f9f5d04f1b\n7b6ff2027f7b98e1cc6dbdf9837945e4ed84ea89a9963db2643de9b21b5d\nfd9c4f5284bcee7123e3e2edf38208e769ba41c9a3855a9bb28501dd6c83\n3725001a3ecafc12a2fab249b6586ff8d71b83e9e20a81c2053861aa7628\n4f967f2e44ecb176e930533a73583f17c91ecb9a5012c4d5f7a76a6ba962\na73aa37f0afae9464e525ea918e416d54960c3bda2d4c9e680a157fd4842\n3f3e3529fe29ddc74461b33915e8b85163f89527f1bce75ceb65cb4e2b78\n3d8d8c7ba35415b59e3caafe32f88c50a743973454536c9069f34027d72c\nb5bcbe173376abe04659a96c01bb77e26794a5c11f0615bece12c2dd763b\n46760ea58e2eaef2e9f375a37ff7c893d56e4cff683001e6b71113092343\na27682b4618aab8cc66fbf1f75baf8234b80cb5f5a2660ea1512401834ec\n77c5",
+      "208380815": "418e86e1cfaf5171f7924210332316787fb52b593c5e18227d6730f7d266\nfb87cb439fa5e26153b713722b0558f05888e5865f6fb1d157562d8e9512\n6ec7b6f1b5cb944344e21cdeaf9d70a24eb71a247ba217c3b7c1f9d4fd90\nebf7adc7c1daeeada8fac307b08fb2a377d7cc0b2357ab15e0c3f2b67454\na6ba345b478d6abc826ece72dac1ec45a1852a1479d14db5da78f364c1ef\nc8f80cc1d5e95f160ec2d78f2fbed4e6a9a7f43db809b3c762908fd185d9\n603c904e0cae2d8077e236f3fa3c710a96bd462279dfce7d686a8f6fa92a\nb5e73360ebd07beaba9a0c0bef6d7402ae585fd430fcc7556929b1f412e7\n1aceac28dfbb37789a467eaae9fbbab8c99f7fcec1b1aa882b15cda373ad\n2f6a949fb5a3bfdcd63ba6a01546f24cf1f6535591ab6093fed5d39ed386\n3cca8f508e9652ee25fbfcac483811aeff14c7afc9b9fbc891943dcbd7fc\n7233a5dbe347188148525d20e548eed5f1356d8e807940d89509c93a41a8\n5efb249fd1d561d8f9fa9e2f447ffc32c241ca687cfe29e493efae382499\n1681299210e6f89114843d887cc8e879a5546d8a22a3bfa073cf96f709f6\n14d979d04974adf75d92a7a364440fa1707b582c70bf25851e24c94e4e6e\naa2d35522f4e944cce198ca7c85c4b5412c8ff530bdb8bd66731eda9c4b7\n84fb7e52865ad01f29f753d111a07250523e74fcb364ef165f853396356d\n8a86",
+      "277841087": "7bdbd67a78a985638ae633f77722ffecdeef50d72c5a55222b8a34496310\n68b10d6bd0cbd29766bddff48649bb73be670570121fe938fe1d20b5aa7c\n4c08f1dbd4dfae7ecd48a2d346d8f74d7da8899416044d1f1509636ce06a\nb043c2ad2fd255d6635787da02895c46f063b97a3bbb45bfa3abc5088fce\nba126eea14c0b1c6a70f0b39a19f16f47e809a4870b4bc90ed8b9888175f\n2a84d4d2ec3100e4b304b60ec5f0ecff84248d0273ae297b11bc41e12c9b\n519b37483f9d536981d0bfff046c2e9741422eed5b01502dd5269e49180a\nd4a7ea5bd5f3fcfb1679469d3a438f7b2fe8d4943590965554aeb06e1635\n60bbb342670c2f6f05f7a2b6d493c68a9f4d11c0fa226be90701be028ef7\n2adf1a7e3e85c9504f112f137e4f1ecc2a3d7e3ed3be72ad6c09d0b364ae\n246b7dc0a2b258c32a4189528e06d8ff7192316b4aba1a71b28938c906f5\ne44f5a0b1f280ed0c073162a75676e6f1eb08becb41cc1f92df4d7ca4fbe\n86bfe4a3fb2833989bec1f85158e6d42e1d6f218b8967d66cd5494b2f568\n3697c827a3a42efb2d25d51b90ec9fe141d90e27e7def43feb706518e1b0\n2f868322b060d3c262defd2182d1c4a107dcb5c578403dec082223842c6d\nf6280bec4fed7b82d53c5a4fa156d2cc90b156a13fad09fe536bfb3085d0\n03062a5620a39bb5e9461f5ed5bc7f2cde48c2e2c8de26e14c2005de28ae\n28e5",
+      "347301359": "5288e0d05f9a3468abf03faca6717e096a87162be990dd868997fd5919fa\n419e0f85bfa3b377e583c7d40a3cb0f484184850a6d5570038a40f86cdbe\n6aa06384381a6d70322f07fb5907db558f20fbf88fa701bcc88edc193631\n3280be2cc3b3b45648c51316d8d77fe50de2c6593232769aa36b91d78b9a\n31af31b0e3ffc65133b17053ffb4213cc1a5339258f77d1779654fe8de11\ncc728586b6902950f381c9fe6a02c441e67f614efb13cc0806e467879ff2\n29cb0a6e6e21103f387aa6e1c610751edac8fcd7322959775abb69904d82\n56a0b7e1e5491fef690407e87df3250509e40f82301b087ed19e9c8f215c\nd61c7a0dc9221710187f50f3f13722e6b3b4e9298bdc9347653e8e11de2a\n2f918cd44c0cb7041f69e3f7293efbc7c53e663e8e1a5037fabcc6df4bdb\n2f366d359054a54d5980e70f00c06a44a38bbcfae024defe4c857845e592\n5ba0d8651742e3960e520e0e6d355603f324cbcdc0e669bff24832a010f7\n64f6f24636c1773ad7acfe1d3bbf7c4bfb8d8cff81a33123c527d1003c27\nc6a594741f499bee709013339190677d7cdfd2cd642a904ffc0f07586fd3\nb067f411160066aa53881de72ac819077c0dd3ed6e631ed2d31a61ba6aef\n5e0544d8002c5a9a63b2c7303abcb2bedd37c34300d0830296ed371ffffc\n870b367b5eb82c562e26a5ded4f6dc92778072f05f89ca571bab69399b4e\nfec4",
+      "416761631": "d9e18321a444c41dce7040dc3609b6b40794b590e4091ce0e9b6ae73f060\n3a876ea1971aac57462ca00dc45633219c77bc6be91a6c78d95383502006\nb51e25bc202daa616898a70aa424ece41e59873a4aabf131424062213449\n125a1529a2c52b4910429293b6fd9ec21c6890a88041a4a52cd5fc98763f\n7fb6cf69df5734c2485fdd7b7610e778a709a9b61821a366ec823eef57a5\n3bbc6a9c8e2903c26902f321d8a7a6546e6defd0cfd2bd252c61fa276cfb\ne1c61163263263a18ba9363c51a036a79d6035c27468504e0a200e8460d5\n106e08fbe252a28e48243da21b71645da7f7fca77d7fe05035c5156a8901\na81b2300aef4f78faac32a14863363bff4571ac8db130b43dc0907f4d4a4\ndd7579beb5c1de426ec4b3b1f21d1075f2daf64fd43c9cf0167cfa8fcbb8\nf8b810a8d5d860d90f0cf1062ea47c536dae4df5b65f110be72af9ebc5ec\n5aa5fdcf1979592715f1fca682317a841a270141ba505201699b019e967a\nf2fb1f7896a190df2548e6998dc9c509809839638bc1dbd18f66cc60e5ee\n726cfea4cc93cd4a4ad725fc93fd6e2b19f0d984284d1418062ea33fd76e\na101e77966dd66380387298274b96a6d696cf18bd82f37c7f5e8c77a9d96\nd6884de19ac1163a0345cde63a116a9f54150c7bda6d343cd6a44c22db66\n85af1016657f2a99896a915a3a8dab02ba97731e45c6de1b40e44a23dc6b\n7f4f",
+      "486221903": "36f932cfbfa6023139d3ac29f15d90b1e098108bdcaa078adf9c80a06a7f\n3c353f7b9b8eb115d13e98f73cb2221b5d5ee80502e86bec69e675d1d273\na869a51f2e5fe801ef136cdc90bc98513692c5d0539d72c9183fe0bb3a2c\n389ed32b29e5d33ef2ba2e2633170e49d38ce6550de66abc97860be247d3\n5926f8cd1e2f387b409a32f1b78311d5fa1a539a1667ce6e88bd50b98d6d\n55537b43591bc20593b5b94eaa66e3e721924cb4162a38d2c4f3790bf07c\n0a44013525bc69cc42d006ed9f276d0fdb2e46ff4b61a94ca48bf713f2fb\n1203f01254f0bbec89876740a23ab057121e33389dbea66c61c5e02f3335\n46d5676ee7d644ce5ae5a15c2e63bf176ca232010bc2eafd61cb6f3d1720\n2602387f229029e59fbe8c8e1c53ae38ffa8679e39a04c03f384bd305479\n1d7c3cf56c497a64a3d5eeadac1dbae8fdbc77aefe3ce5f452798fdd83cb\n09135a4e28767380339159b41fb672ec7683ec42f7dbbe11726ccab3f47b\nf05971ec16f2812ad6c3502adb6dce8cbfe37ac11bd3d78bf4a977e5b692\n2485cf9d51583348249ca284f1ce09df5a1117c8657e8ff98d7ad96d3f55\nb4335b861c76e9059903920535f1256d95c80c4e2a4a1cc156a3f9efd37f\n37032d987012e521afcf1c40612ced0ae768b4ddb55317ea6767fb4fb2c5\n876a0093e507939fa7b40c407f22bf6a01f07253900a7b3956e1c69afe57\nddbd",
+      "555682175": "b5f5f58c9430de1196ed26d3228959e4c55d0d7f7e062386af31a114787b\n9c6e40e3920e0cd74d5033ff6b2d02d6bdc49c907ec76be94f53121f55b7\nb75cf4b397eff670b0170a106c8e7c1dc4cc9122a66a695f64b19a027e27\ndefaedd5a62d4f3994940c6cc81d696b61c877b38de4728be664f5b2c195\n6d7e6d733b6897991b06d420988a3de001747a7a76370421fc32e2db5f19\nd1f3f4aeb6dfc986f0be56fdb891397789f2de3a5476782c3cf97ddcfe29\n9c73fff49c58156220dea96b5389007b6dd91f88be4d57416a9d816d80f9\n826c9fac145fe8de78b2f12f294a3b4cc9de50cc14666e49ba85390fe8e7\n8ba877542aefb9d96ad5a52c9859efe40500f00e7f4b47933b7759c4d14c\nc0dde978fe0fd7a72de84ced105d887d0cc0cab9af3ce05f04bd70d6397d\n0f04f9482efd0125fa1a1e91ad87b4e5372fd14181fb80f342a0cf8629bc\n6b8720a0dde95805d0158b48bf80f398b01fd2e320a946928d6fff32d7eb\n67935ecf8cf9bbf9d3864cc3fb729793858d30df368195d65ed1640bd6ca\n173737106c72be1e032b55ab537454c450ff44376caf241868eb258e55ff\na06124612db952f8142207b635df7ca1bd94bb8f7b2b8a64365ebdf034b5\n07dd05cf586352e9c68037f91ef89dae144926a06385b5b2968811e1f54b\n2aa83d498a5d63e4e912ef7e393ab1c6c46a33fb7c5729e959723073260a\na614",
+      "625142447": "132ce154e20275e7b8e507a019d65531abb48400d3253fb326a5bfbd8083\n13a411feb49193199d2716826e89b01945c2fa2ba07138ec5f857982cfa6\n3c66d4f139b1bd9980f6ab9c780f85975e7e4922744145a637c63bb770a8\n100a64f7b67a30862dee87a04f3a8c425dfdfb7dd5e1101bc2cdc933eeef\na5dd9d839b2fb81fbfad86ceac971e6df57756567c7de9eb4c4e61144d01\n9965a5ce740749e1577f79fbeff386c1dfcba9f57164e5282fc8f70aae3a\ndd1831bf47f3264e42983131fc5e201ecfa689b3e37c51456924764b097e\n49ce7379019316b36db39a0d0ffefe20f7e5dcb15dec193532d74738f6fd\neecf91b277eeb2d7541f2174ca986223bec5028ef46a7f76928cff2f9ad6\n6b61d7baef9c66147b171dfab27aadd09124f5325fede470f092f880d2ff\n9d52cc9d7dda827eae3948f0cc0b06ed9284ab76e33798a6d5e2929d8ff1\n1f8031633e45397b897ecad347767c0e10c42ca4bf3a0d27f6f58375efa3\ne862598df7e585aebcaafaec5ac92220d4c3fa7fab113be07f30a3c81041\nc7a5019155b17a7f7d43abd447ed3e7723126429634b993545f462864b6c\n383ff98d7c71ed3754b029f5fd076dd166d3e7625ff39e63863152f1854f\n731f928b765fbe5f50307effec08da230897e70a1a8aaab4307b53de6569\n79358419adf99fc73047eb813d581db7ac60407d4c77c1e3c3d9669bf343\nec22"
+    }
+  },
+  "device_info": {
+    "manufacturer": "ASMT    ",
+    "model": "Hitachi_HTS543232A7A384",
+    "serial_number": "120312E2M3121K00UN6S",
+    "connector": "block:scsi:usb:pci:platform",
+    "size": "298.1G",
+    "storage_medium": "HDD",
+    "export_data": {
+      "block": {
+        "path": "/dev/sda",
+        "rota": true,
+        "ptuuid": null,
+        "serial": "120312E2M3121K00UN6S",
+        "name": "sda",
+        "size": "298.1G",
+        "mode": "brw-rw----",
+        "model": "Hitachi_HTS543232A7A384",
+        "vendor": "ASMT    ",
+        "uuid": null,
+        "type": "disk",
+        "hotplug": "True",
+        "label": null,
+        "state": "running",
+        "phy_sec": 512,
+        "mountpoint": null,
+        "children": null,
+        "parttype": null,
+        "wsame": "32M",
+        "dax": false,
+        "partflags": null,
+        "disc-gran": "0B",
+        "disc-max": "0B",
+        "tran": "usb",
+        "fstype": null,
+        "ra": 65532,
+        "kname": "sda",
+        "group": "disk",
+        "min-io": 512,
+        "wwn": "0x5000cca6e9c0604b",
+        "pttype": null,
+        "opt-io": 33553920,
+        "rq-size": 60,
+        "maj:min": "8:0",
+        "fsver": null,
+        "fsuse%": null,
+        "ro": false,
+        "rev": "0   ",
+        "disc-zero": false,
+        "alignment": 0,
+        "sched": "mq-deadline",
+        "disc-aln": 0,
+        "partuuid": null,
+        "owner": "root",
+        "fsused": null,
+        "parttypename": null,
+        "fsavail": null,
+        "log-sec": 512,
+        "pkname": null,
+        "partlabel": null,
+        "hctl": "0:0:0:0",
+        "rand": true,
+        "subsystems": "block:scsi:usb:pci:platform",
+        "rm": false,
+        "zoned": "none",
+        "fssize": null
+      },
+      "smart": {
+        "json_format_version": [
+          1,
+          0
+        ],
+        "smartctl": {
+          "version": [
+            7,
+            2
+          ],
+          "svn_revision": "5155",
+          "platform_info": "aarch64-linux-5.10.0-23-arm64",
+          "build_info": "(local build)",
+          "argv": [
+            "smartctl",
+            "-aj",
+            "/dev/sda"
+          ],
+          "exit_status": 64
+        },
+        "local_time": {
+          "time_t": 1689976136,
+          "asctime": "Fri Jul 21 21:48:56 2023 UTC"
+        },
+        "device": {
+          "name": "/dev/sda",
+          "info_name": "/dev/sda [SAT]",
+          "type": "sat",
+          "protocol": "ATA"
+        },
+        "model_family": "Hitachi/HGST Travelstar Z5K320",
+        "model_name": "Hitachi HTS543232A7A384",
+        "serial_number": "120312E2M3121K00UN6S",
+        "wwn": {
+          "naa": 5,
+          "oui": 3274,
+          "id": 29691502667
+        },
+        "firmware_version": "ES2OA70K",
+        "user_capacity": {
+          "blocks": 625142448,
+          "bytes": 320072933376
+        },
+        "logical_block_size": 512,
+        "physical_block_size": 512,
+        "rotation_rate": 5400,
+        "form_factor": {
+          "ata_value": 3,
+          "name": "2.5 inches"
+        },
+        "trim": {
+          "supported": false
+        },
+        "in_smartctl_database": true,
+        "ata_version": {
+          "string": "ATA8-ACS T13/1699-D revision 6",
+          "major_value": 508,
+          "minor_value": 40
+        },
+        "sata_version": {
+          "string": "SATA 2.6",
+          "value": 31
+        },
+        "interface_speed": {
+          "max": {
+            "sata_value": 6,
+            "string": "3.0 Gb/s",
+            "units_per_second": 30,
+            "bits_per_unit": 100000000
+          }
+        },
+        "smart_support": null,
+        "smart_status": {
+          "passed": true
+        },
+        "power_cycle_count": 2314,
+        "temperature": {
+          "current": 38
+        },
+        "ata_smart_selective_self_test_log": {
+          "revision": 1,
+          "table": [
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            },
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            },
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            },
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            },
+            {
+              "lba_min": 0,
+              "lba_max": 0,
+              "status": {
+                "value": 0,
+                "string": "Not_testing"
+              }
+            }
+          ],
+          "flags": {
+            "value": 0,
+            "remainder_scan_enabled": false
+          },
+          "power_up_scan_resume_minutes": 0
+        },
+        "ata_smart_attributes": {
+          "revision": 16,
+          "table": [
+            {
+              "id": 1,
+              "name": "Raw_Read_Error_Rate",
+              "value": 100,
+              "worst": 100,
+              "thresh": 62,
+              "when_failed": "",
+              "flags": {
+                "value": 11,
+                "string": "PO-R-- ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": true,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 2,
+              "name": "Throughput_Performance",
+              "value": 100,
+              "worst": 100,
+              "thresh": 40,
+              "when_failed": "",
+              "flags": {
+                "value": 5,
+                "string": "P-S--- ",
+                "prefailure": true,
+                "updated_online": false,
+                "performance": true,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 3,
+              "name": "Spin_Up_Time",
+              "value": 215,
+              "worst": 215,
+              "thresh": 33,
+              "when_failed": "",
+              "flags": {
+                "value": 7,
+                "string": "POS--- ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": true,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 60129542145,
+                "string": "1"
+              }
+            },
+            {
+              "id": 4,
+              "name": "Start_Stop_Count",
+              "value": 97,
+              "worst": 97,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 18,
+                "string": "-O--C- ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 6095,
+                "string": "6095"
+              }
+            },
+            {
+              "id": 5,
+              "name": "Reallocated_Sector_Ct",
+              "value": 100,
+              "worst": 100,
+              "thresh": 5,
+              "when_failed": "",
+              "flags": {
+                "value": 51,
+                "string": "PO--CK ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 7,
+              "name": "Seek_Error_Rate",
+              "value": 100,
+              "worst": 100,
+              "thresh": 67,
+              "when_failed": "",
+              "flags": {
+                "value": 11,
+                "string": "PO-R-- ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": true,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 8,
+              "name": "Seek_Time_Performance",
+              "value": 100,
+              "worst": 100,
+              "thresh": 40,
+              "when_failed": "",
+              "flags": {
+                "value": 5,
+                "string": "P-S--- ",
+                "prefailure": true,
+                "updated_online": false,
+                "performance": true,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 9,
+              "name": "Power_On_Hours",
+              "value": 82,
+              "worst": 82,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 18,
+                "string": "-O--C- ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 7964,
+                "string": "7964"
+              }
+            },
+            {
+              "id": 10,
+              "name": "Spin_Retry_Count",
+              "value": 100,
+              "worst": 100,
+              "thresh": 60,
+              "when_failed": "",
+              "flags": {
+                "value": 19,
+                "string": "PO--C- ",
+                "prefailure": true,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 12,
+              "name": "Power_Cycle_Count",
+              "value": 99,
+              "worst": 99,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 2314,
+                "string": "2314"
+              }
+            },
+            {
+              "id": 191,
+              "name": "G-Sense_Error_Rate",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 10,
+                "string": "-O-R-- ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": true,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 192,
+              "name": "Power-Off_Retract_Count",
+              "value": 99,
+              "worst": 99,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 262,
+                "string": "262"
+              }
+            },
+            {
+              "id": 193,
+              "name": "Load_Cycle_Count",
+              "value": 80,
+              "worst": 80,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 18,
+                "string": "-O--C- ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 205908,
+                "string": "205908"
+              }
+            },
+            {
+              "id": 194,
+              "name": "Temperature_Celsius",
+              "value": 157,
+              "worst": 157,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 2,
+                "string": "-O---- ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 240519217190,
+                "string": "38 (Min/Max 16/56)"
+              }
+            },
+            {
+              "id": 196,
+              "name": "Reallocated_Event_Count",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 50,
+                "string": "-O--CK ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": true,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 197,
+              "name": "Current_Pending_Sector",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 34,
+                "string": "-O---K ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": false,
+                "event_count": false,
+                "auto_keep": true
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 198,
+              "name": "Offline_Uncorrectable",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 8,
+                "string": "---R-- ",
+                "prefailure": false,
+                "updated_online": false,
+                "performance": false,
+                "error_rate": true,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            },
+            {
+              "id": 199,
+              "name": "UDMA_CRC_Error_Count",
+              "value": 200,
+              "worst": 200,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 10,
+                "string": "-O-R-- ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": true,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 1,
+                "string": "1"
+              }
+            },
+            {
+              "id": 223,
+              "name": "Load_Retry_Count",
+              "value": 100,
+              "worst": 100,
+              "thresh": 0,
+              "when_failed": "",
+              "flags": {
+                "value": 10,
+                "string": "-O-R-- ",
+                "prefailure": false,
+                "updated_online": true,
+                "performance": false,
+                "error_rate": true,
+                "event_count": false,
+                "auto_keep": false
+              },
+              "raw": {
+                "value": 0,
+                "string": "0"
+              }
+            }
+          ]
+        },
+        "ata_smart_data": {
+          "offline_data_collection": {
+            "status": {
+              "value": 0,
+              "string": "was never started"
+            },
+            "completion_seconds": 45
+          },
+          "self_test": {
+            "status": {
+              "value": 0,
+              "string": "completed without error",
+              "passed": true
+            },
+            "polling_minutes": {
+              "short": 2,
+              "extended": 93
+            }
+          },
+          "capabilities": {
+            "values": [
+              91,
+              3
+            ],
+            "exec_offline_immediate_supported": true,
+            "offline_is_aborted_upon_new_cmd": false,
+            "offline_surface_scan_supported": true,
+            "self_tests_supported": true,
+            "conveyance_self_test_supported": false,
+            "selective_self_test_supported": true,
+            "attribute_autosave_enabled": true,
+            "error_logging_supported": true,
+            "gp_logging_supported": true
+          }
+        },
+        "ata_sct_capabilities": {
+          "value": 61,
+          "error_recovery_control_supported": true,
+          "feature_control_supported": true,
+          "data_table_supported": true
+        },
+        "ata_smart_error_log": {
+          "summary": {
+            "revision": 1,
+            "count": 1,
+            "logged_count": 1,
+            "table": [
+              {
+                "error_number": 1,
+                "lifetime_hours": 2584,
+                "completion_registers": {
+                  "error": 132,
+                  "status": 81,
+                  "count": 25,
+                  "lba": 11777959,
+                  "device": 0
+                },
+                "error_description": "Error: ICRC, ABRT at LBA = 0x00b3b7a7 = 11777959",
+                "previous_commands": [
+                  {
+                    "registers": {
+                      "command": 96,
+                      "features": 120,
+                      "count": 80,
+                      "lba": 11777864,
+                      "device": 64,
+                      "device_control": 0
+                    },
+                    "powerup_milliseconds": 6728152,
+                    "command_name": "READ FPDMA QUEUED"
+                  },
+                  {
+                    "registers": {
+                      "command": 96,
+                      "features": 64,
+                      "count": 72,
+                      "lba": 11794664,
+                      "device": 64,
+                      "device_control": 0
+                    },
+                    "powerup_milliseconds": 6728138,
+                    "command_name": "READ FPDMA QUEUED"
+                  },
+                  {
+                    "registers": {
+                      "command": 96,
+                      "features": 56,
+                      "count": 64,
+                      "lba": 6276386,
+                      "device": 64,
+                      "device_control": 0
+                    },
+                    "powerup_milliseconds": 6728122,
+                    "command_name": "READ FPDMA QUEUED"
+                  },
+                  {
+                    "registers": {
+                      "command": 96,
+                      "features": 8,
+                      "count": 56,
+                      "lba": 11787520,
+                      "device": 64,
+                      "device_control": 0
+                    },
+                    "powerup_milliseconds": 6728121,
+                    "command_name": "READ FPDMA QUEUED"
+                  },
+                  {
+                    "registers": {
+                      "command": 96,
+                      "features": 8,
+                      "count": 48,
+                      "lba": 11787512,
+                      "device": 64,
+                      "device_control": 0
+                    },
+                    "powerup_milliseconds": 6728116,
+                    "command_name": "READ FPDMA QUEUED"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "power_on_time": {
+          "hours": 7964
+        },
+        "ata_smart_self_test_log": {
+          "standard": {
+            "revision": 1,
+            "table": [
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 6155
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 6043
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 6037
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 5988
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 5967
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 4380
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 4233
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 4232
+              },
+              {
+                "type": {
+                  "value": 2,
+                  "string": "Extended offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 2,
+                  "string": "Extended offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 2,
+                  "string": "Extended offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 2,
+                  "string": "Extended offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 25,
+                  "string": "Aborted by host",
+                  "remaining_percent": 90
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 19,
+                  "string": "Aborted by host",
+                  "remaining_percent": 30
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 3770
+              },
+              {
+                "type": {
+                  "value": 1,
+                  "string": "Short offline"
+                },
+                "status": {
+                  "value": 0,
+                  "string": "Completed without error",
+                  "passed": true
+                },
+                "lifetime_hours": 3769
+              }
+            ],
+            "count": 21,
+            "error_count_total": 0,
+            "error_count_outdated": 0
+          }
+        }
+      }
+    }
+  },
+  "method": {
+    "name": "Basic Erasure",
+    "standard": "",
+    "description": "A single-pass overwrite of the entire drive with zeros. This method is relatively fast and simple, but it may not be completely effective in destroying all traces of the original data.",
+    "removal_process": "Overwriting",
+    "verification_enabled": true,
+    "bad_sectors_enabled": false,
+    "warnings": null,
+    "overwriting_steps": [
+      {
+        "tool": "shred",
+        "pattern": "random"
+      }
+    ]
+  },
+  "result": true,
+  "version": "0.1.1-beta1"
+}

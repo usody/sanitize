@@ -1,9 +1,12 @@
-from .export_data import Block, Smart, ExportData
+from .definition import (
+    Method,
+    Execution,
+)
 from .devices import Device
-from .erasure import (
-    ErasureCertificate,
-    ErasureValidation,
-    ErasureCommand,
-    ErasureMethod,
-    ErasureStep,
+from .export_data import Block, Smart, ExportData
+from .sanitize import (
+    SanitizeValidation,
+    Sanitize,
+    Step,
+    Exec,
 )
