@@ -1,6 +1,5 @@
 import json
 import logging
-import sys
 from pathlib import Path
 from typing import Union, Optional
 
@@ -96,10 +95,10 @@ class ErasureProcess:
         :return:
         """
         # Extract the important data.
-        self._device.manufacturer = self.blk.vendor or self.smart.model_family
-        self._device.model = self.blk.model or self.smart.model_name
-        self._device.serial_number = self.blk.serial \
-                                     or self.smart.serial_number
+        self._device.manufacturer = self.smart.model_family or self.blk.vendor
+        self._device.model = self.smart.model_name or self.blk.model
+        self._device.serial_number = self.smart.serial_number \
+                                     or self.blk.serial
         self._device.connector = self.blk.subsystems
         self._device.size = self.blk.size
 
