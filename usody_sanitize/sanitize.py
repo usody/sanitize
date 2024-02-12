@@ -109,7 +109,7 @@ class ErasureProcess:
 
         if self.smart.rotation_rate == 0:  # Is SSD.
             if rotation == 1:
-                logger.warning(f"Detected as SSD but:\n\t"
+                logger.warning(f"{self.path} has been detected as SSD but:\n\t"
                                f" System says: {rotation}\n\t"
                                f" `smartctl` says: {self.smart.rotation_rate} \n\t"
                                f" `lsblk` says: {self.blk.rota}")
@@ -127,14 +127,10 @@ class ErasureProcess:
         if self._sanitize.method.verification_enabled:
             # Pre validation steps before erasure.
             await self._pre_validation()
-
-            logger.debug(self._sanitize.validation)
-            # noinspection PySimplifyBooleanCheck
-            if not self._sanitize.validation.result:
+            if self._sanitize.validation.result is False:
                 logger.warning(
                     f"{self.path}: Validation failed. Stopping process.")
                 return
-
 
         if self._sanitize.device_info.storage_medium == 'HDD':
             logger.info(f"{self.path}: Detected as HDD.")
@@ -163,21 +159,14 @@ class ErasureProcess:
         # If validation was enabled, finish the validation.
         if self._sanitize.method.verification_enabled:
             await self._validation()
-
-        # The result depends on the validation
-        if self._sanitize.method.verification_enabled:
             self._sanitize.result = self._sanitize.validation.result
         elif self._sanitize.steps:
-            # IF validation is disabled, check the erase command.
+            # If validation is disabled, check the last erase command.
             self._sanitize.result = self._sanitize.steps[-1].success
         else:
-            # If there are no steps and neither validation,
+            # If there are no steps and neither validation, then
             # there is no erasure.
             self._sanitize.result = False
-
-        # Show info when the erasure is done.
-        logger.debug(f"{self.path}: Erasure finished, results:"
-                     f" {json.dumps(self._sanitize.model_dump(mode='json'), indent=4)}")
 
     async def _pre_validation(self) -> None:
         """Check if the disk is not mounted and if it is not a
@@ -207,6 +196,7 @@ class ErasureProcess:
                 self._sanitize.validation.data = {}
                 logger.warning(f"{self.path}:"
                                f" Validation step {_cmd.command} failed.")
+                self._sanitize.validation.result = False
                 return False
             return True
 
@@ -218,7 +208,6 @@ class ErasureProcess:
                 cmd1.description = f"Read data from sector {s} to validate" \
                                    " if have been changed."
                 if not _successful_command(cmd1):
-                    self._sanitize.validation.result = False
                     return
                 self._sanitize.validation.data[s] = cmd1.stdout
                 cmd1.stdout = "Private"
@@ -229,7 +218,6 @@ class ErasureProcess:
                 cmd2.description = "Write the data to" \
                                    " validate into the sectors"
                 if not _successful_command(cmd2):
-                    self._sanitize.validation.result = False
                     return
 
             for s in sectors:
@@ -237,7 +225,6 @@ class ErasureProcess:
                 cmd3 = await commands.read_from_sector(self.path.as_posix(), s, bs)
                 cmd3.description = "Check if new bytes has been written"
                 if not _successful_command(cmd3):
-                    self._sanitize.validation.result = False
                     return
 
                 elif self._sanitize.validation.data[s] == cmd3.stdout:
@@ -253,8 +240,6 @@ class ErasureProcess:
         except Exception as ex:
             logger.error(f"{self.path}: {ex}")
             self._sanitize.validation.result = False
-        else:
-            self._sanitize.validation.result = True
 
         logger.debug(f"{self.path}: Pre validation step finished.")
 
@@ -271,8 +256,9 @@ class ErasureProcess:
                 logger.warning(f"{self.path}: Erasure validation failed.")
                 return
 
-        self._sanitize.validation.result = True
-        logger.debug(f"Validation passed.")
+        if self._sanitize.validation.data:  # Data is not empty.
+            self._sanitize.validation.result = True
+            logger.debug(f"{self.path}: Validation passed.")
 
     async def _run_erase_steps(self):
         """Runs the commands described on the overwriting_steps of the
