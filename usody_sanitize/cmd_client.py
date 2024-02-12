@@ -69,7 +69,7 @@ def run_cmd():
     # Export the output to a file.
     for item in result:
         item_serial_number = item.get('device_info', {}).get('serial_number')
-        current_date = datetime.datetime.now().date().isoformat()
+        current_date = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 
         file_name = f"{current_date}_{item_serial_number}.json"
         with open(output_path / file_name, 'w') as _fh:
